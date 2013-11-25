@@ -1,0 +1,117 @@
+\documentclass{template/openetcs_article}
+% Use the option "nocc" if the document is not licensed under Creative Commons
+%\documentclass[nocc]{template/openetcs_article}
+\usepackage{lipsum,url}
+\usepackage{supertabular}
+\usepackage{multirow}
+\usepackage{color, colortbl}
+\definecolor{gray}{rgb}{0.8,0.8,0.8}
+\usepackage[modulo]{lineno}
+\graphicspath{{./template/}{.}{./images/}}
+\begin{document}
+\frontmatter
+\project{openETCS}
+
+%Please do not change anything above this line
+%============================
+
+
+
+% The document metadata is defined below
+
+%assign a report number here
+\reportnum{OETCS/WP5/D01}
+
+%define your workpackage here
+\wp{Work-Package 5: ``openETCS Demonstrator''}
+
+%set a title here
+\title{WP5 planning}
+
+%set a subtitle here
+\subtitle{FPP Planning update.}
+
+%set the date of the report here
+\date{November 2013}
+
+%define a list of authors and their affiliation here
+
+\author{Didier Weckmann}
+
+\affiliation{ERSA\\
+  5 rue Maurice Blin \\
+  67500 Haguenau, France \\
+  \\
+  eMail: inforequest@ersa-france.com \\
+  WebSite: www.ersa-france.com}
+
+% define the coverart
+\coverart[width=350pt]{openETCS_EUPL}
+
+%define the type of report
+\reporttype{Description of work}
+
+%=============================
+\maketitle
+
+%Modification history
+%if you do not need a modification history table for your document simply comment out the eight lines below
+%=============================
+\section*{Modification History}
+\tablefirsthead{
+\hline 
+\rowcolor{gray} 
+Version & Section & Modification / Description & Author \\\hline}
+\begin{supertabular}{| m{1.2cm} | m{1.2cm} | m{6.6cm} | m{4cm} |}
+ & & & \\\hline
+\end{supertabular}
+
+
+\tableofcontents
+\newpage
+%=============================
+
+%Uncomment the next line if you need line numbers for tracebility when the document is in review
+%\linenumbers
+%=============================
+
+
+% The actual document starts below this line
+%=============================
+\section{Initial planning from FPP}
+	Officially, the project started the 1st July 2012, T0 is assumed to be this date.
+	\begin{itemize}
+		\item T0: 2012-07-01: Start of the project
+		\item T0+6: Functional Specifications
+		\item T0+18: First iteration of OBU Simulator
+		\item T0+21: Data for testing
+		\item T0+24: Preliminary test Environment
+		\item T0+27: Test Environment with physical interfaces
+		\item T0+30: OBU Simulator Demonstrator
+		\item T0+34: Main Tests Executed
+		\item T0+36: Report on Test results
+	\end{itemize}
+
+\section{New planning proposal}
+	Consolidated planning is as follow:
+	
+	\begin{itemize}
+		\item November 2013: Functional Specifications ( 99\% done, need review )
+		\item March 2014: First iteration of OBU Simulator ( 15\% done, work in progress )
+			\subitem Code cleanup (33\% done, work in progress)
+			\subitem Open source code conformance check (0\% done)
+			\subitem TCP/IP sub-systems connection implementation (15\% done)
+			\subitem External interface implementation (0\% done)
+			\subitem Documentation (5\% done)
+		\item May 2014: Input scenarios
+		\item July 2014: Preliminary test Environment
+		\item December 2014: OBU Simulator Demonstrator
+		\item January 2015: Main tests can start
+		\item April 2015: Report on Test results
+	\end{itemize}
+	
+
+%===================================================
+%Do NOT change anything below this line
+
+\end{document}
