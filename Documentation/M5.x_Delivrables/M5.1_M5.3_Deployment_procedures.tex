@@ -1,0 +1,267 @@
+\documentclass{template/openetcs_article}
+% Use the option "nocc" if the document is not licensed under Creative Commons
+%\documentclass[nocc]{template/openetcs_article}
+\usepackage{lipsum,url}
+\usepackage{supertabular}
+\usepackage{multirow}
+\usepackage{color, colortbl}
+\definecolor{gray}{rgb}{0.8,0.8,0.8}
+\usepackage[modulo]{lineno}
+\graphicspath{{./template/}{.}{./images/}}
+
+\begin{document}
+\frontmatter
+\project{openETCS}
+
+%Please do not change anything above this line
+%============================
+
+
+
+% The document metadata is defined below
+
+%assign a report number here
+\reportnum{OETCS/WP5/M5.1}
+
+%define your workpackage here
+\wp{Work-Package 5: ``Demonstrator''}
+
+%set a title here
+\title{Installation guide for WP5 Demonstrator}
+
+%set a subtitle here
+%\subtitle{A template for short documents. Adapted from report template.}
+
+%set the date of the report here
+\date{June 2014}
+
+
+%document approval
+%define the name and affiliation of the people involved in the documents approbation here
+\creatorname{Alexis Julin}
+\creatoraffil{ERSA}
+
+\techassessorname{Alexis Julin}
+\techassessoraffil{ERSA}
+
+\qualityassessorname{Alain Masson}
+\qualityassessoraffil{ERSA}
+
+\approvalname{Klaus-R\"udiger Hase}
+\approvalaffil{DB Netz}
+
+
+%define a list of authors and their affiliation here
+
+\author{Nicolas Van Landeghem, Didier Weckmann, Alexis Julin}
+
+\affiliation{ERSA\\
+5 Rue Maurice Blin \\
+67500 Haguenau, France}
+
+
+
+% define the coverart
+\coverart[width=350pt]{openETCS_EUPL}
+
+%define the type of report
+\reporttype{Description of work}
+
+
+%\begin{abstract}
+%define an abstract here
+%  \lipsum[12-13]
+%\end{abstract}
+
+%=============================
+\maketitle
+
+%Modification history
+%if you do not need a modification history table for your document simply comment out the eight lines below
+%=============================
+
+
+\section*{Modification History}
+\tablefirsthead{
+\hline
+\rowcolor{gray}
+Version & Section & Modification / Description & Author \\\hline}
+\begin{supertabular}{| m{1.2cm} | m{1.2cm} | m{6.6cm} | m{4cm} |}
+ 1.0.0&All Parts &New Document &Alexis Julin \\\hline
+ 1.0.1&New Part &Add license management &Alexis Julin \\\hline
+\end{supertabular}
+
+
+\tableofcontents
+\newpage
+%=============================
+
+%Uncomment the next line if you need line numbers for tracebility when the document is in review
+%\linenumbers
+%=============================
+
+
+% The actual document starts below this line
+%=============================
+
+%Start here
+\section{Introduction}
+This document is a guide for the installation and execution of the EVC simulator software libraries used by
+the Automatic Test Runner (ATR).
+\newline
+\newline
+EVC simulator software libraries is T5.2 delivrable (M5.1)
+\newline
+\newline
+Automatic Test Runner (ATR) is T5.3 delivrable (M5.3)
+\newpage
+\section{Installation}
+\subsection{Hardware and Software requirements}
+OpenETCS step l delivrable has been installed and tested on a computer
+running CentOS 6.5 operating system with the following mandatory conditions :
+\begin{itemize}
+	\item internet connection
+	\item root access
+\end{itemize}
+Due to compatibily between Red Hat Enterprise versions and CentOS, installation works as well on Red Hat Enterprise Linux 6.  
+\subsection{Installation}
+\subsubsection{First steps}
+\begin{itemize}
+	\item Create a folder
+	\item Copy OpenETCS archive in this folder
+	\item Open a terminal
+	\item Unpack OpenETCS archive
+\newline	
+\verb|>tar xvfj OpenETCS_WP5_X_X_X.tar.bz2 |
+	\item Move to WP5\_Demonstrator\_Installer folder
+\newline	
+\verb|>cd WP5_Demonstrator_Installer |	
+	\item Connect as root
+\end{itemize}
+\subsubsection{Mysql dependencies}
+\begin{itemize}
+	\item Install mysql-server package and its dependencies
+	\newline
+	\verb|>yum install mysql-server |
+	\item Start mysql service
+	\newline
+	\verb|>service mysqld start |
+\end{itemize}	
+\subsubsection{SRS databases}
+\begin{itemize}
+	\item Install SRS baseline 230d database
+	\newline
+	\verb|>rpm -Uvh srs230d_db-1.0.3-220.i386.rpm |	
+	\item Install SRS baseline 330 v11 database
+	\newline
+	\verb|>rpm -Uvh srs330_class1_v11_db-1.0.0-282.i386.rpm |	
+	\item Install SRS baseline 330 v20 database
+	\newline
+	\verb|>rpm -Uvh srs330_class1_v20_db-1.0.0-282.i386.rpm |		
+\end{itemize}	
+\subsubsection{Qt driver}
+\begin{itemize}
+	\item Install driver mysql for Qt
+	\newline
+	\verb|>yum install qt-mysql |
+\end{itemize}	
+
+\subsubsection{OpenETCS}
+\begin{itemize}
+	\item Install OpenETCS step1 package
+	\newline
+	\verb|>yum localinstall openETCS-X.X.X-X.X.X.i386.rpm |
+\end{itemize}	
+\subsection{Uninstallation}
+\begin{itemize}
+	\item Uninstall OpenETCS step1 package
+	\newline
+	\verb|>rpm -e openETCS|
+\end{itemize}
+\subsection{Upgrade}
+\begin{itemize}
+	\item Upgrade OpenETCS step1 package
+	\newline
+	\verb|>yum localinstall openETCS-X.X.X-X.X.X.i386.rpm|
+\end{itemize}	
+\subsection{Downgrade}
+\begin{itemize}
+	\item Uninstall old OpenETCS step1 package
+	\newline
+	\verb|>rpm -e openETCS|
+	\item Install new OpenETCS step1 package
+	\newline
+	\verb|>yum localinstall openETCS-X.X.X-X.X.X.i386.rpm|	
+\end{itemize}		
+\newpage
+\section{Content of the package}
+\subsection{OpenETCS archive}
+OpenETCS archive contains :
+\begin{itemize}
+	\item OpenETCS rpm
+	\item SRS 230d database rpm
+	\item SRS 330 v11 database rpm
+	\item SRS 330 v20 database rpm
+\end{itemize}	
+\subsection{Installation directory}
+After installation procedure completed, following files and folders can be found in \textbf{/usr/local/openETCS} folder.
+\subsubsection{Licensing folder}
+Licensing folder contains all tools to manage license.
+\subsubsection{lib folder}
+Lib folder contains EVC simulator software libraries.
+\subsubsection{test\_runner folder}
+test\_runner folder contains :
+\begin{itemize}
+	\item scenarios folder which contains all (templates and user specific) Automatic Test Runner scenarios
+	\item data folder which contains mainly simulation logs
+	\item test\_runner, the Automatic Test Runner executable
+\end{itemize}
+\newpage
+\section{Getting a license (First installation only)}
+\subsection{Getting computer fingerprint}
+\begin{itemize}
+	\item open a \emph{non-root} terminal
+	\item move to OpenETCS folder
+	\newline
+	\verb|>cd /usr/local/openETCS |	
+	\item move to Licensing folder
+	\newline
+	\verb|>cd Licensing |
+	\item launch script for getting fingerprint
+	\newline
+	\verb|> ./echoid >> echoid_output.txt|	
+	\item send an email with file echoid\_output.txt to \emph{licenseactivation@ersa-france.com}
+\end{itemize}
+\subsection{Installing license}
+You will receive an email with a licensing file
+\begin{itemize}
+	\item open licensing file with a text editor
+	\item open a root terminal
+	\item move to OpenETCS folder
+	\newline
+	\verb|>cd /usr/local/openETCS |	
+	\item move to Licensing folder
+	\newline
+	\verb|>cd Licensing |
+	\item launch license installer script
+	\newline
+	\verb|>./licenseinstaller -i -l 'xxxx' /opt/ERSA/license/license.rc |	where xxxx must be replaced by the key in licensing file (you can find it from first character to \# character \emph{include})
+\end{itemize}
+\newpage
+\section{Running the Automatic Test Runner}
+To execute Automatic Test Runner : 
+\begin{itemize}
+	\item Open a terminal
+	\item move to OpenETCS folder
+	\newline
+	\verb|>cd /usr/local/openETCS |		
+	\item launch test\_runner
+	\newline
+	\verb|>./test_runner oETCS_scenarios/scenario_name.sce |	
+\end{itemize}
+
+
+%===================================================
+%Do NOT change anything below this line
+
+\end{document}
