@@ -1,0 +1,708 @@
+\documentclass{template/openetcs_article}
+% Use the option "nocc" if the document is not licensed under Creative Commons
+%\documentclass[nocc]{template/openetcs_article}
+\usepackage{lipsum,url}
+\usepackage{supertabular}
+\usepackage{multirow}
+\usepackage{color, colortbl}
+\definecolor{gray}{rgb}{0.8,0.8,0.8}
+\usepackage[modulo]{lineno}
+\graphicspath{{./template/}{.}{./images/}}
+
+\begin{document}
+\frontmatter
+\project{openETCS}
+
+%Please do not change anything above this line
+%============================
+
+
+
+% The document metadata is defined below
+
+%assign a report number here
+\reportnum{OETCS/WP5/D5.1}
+
+%define your workpackage here
+\wp{Work-Package 5: ``Demonstrator''}
+
+%set a title here
+\title{WP5 Demonstrator - Functional Specifications}
+
+%set the date of the report here
+\date{June 2014}
+
+
+%document approval
+%define the name and affiliation of the people involved in the documents approbation here
+\creatorname{Alexis Julin}
+\creatoraffil{ERSA}
+
+\techassessorname{Nicolas Van Landeghem}
+\techassessoraffil{ERSA}
+
+\qualityassessorname{Alain Masson}
+\qualityassessoraffil{ERSA}
+
+\approvalname{Klaus-R\"udiger Hase}
+\approvalaffil{DB Netz}
+
+
+%define a list of authors and their affiliation here
+
+\author{Patrick Deutsch, Nicolas Van Landeghem, Didier Weckmann, Alexis Julin}
+\affiliation{ERSA\\
+5 Rue Maurice Blin \\
+67500 Haguenau, France}
+
+% define the coverart
+\coverart[width=350pt]{openETCS_EUPL}
+
+%define the type of report
+\reporttype{Description of work}
+
+%=============================
+\maketitle
+
+%Modification history
+%if you do not need a modification history table for your document simply comment out the eight lines below
+%=============================
+
+
+\section*{Modification History}
+\tablefirsthead{
+\hline
+\rowcolor{gray}
+Version & Section & Modification / Description & Author \\\hline}
+\begin{supertabular}{| m{1.2cm} | m{1.2cm} | m{6.6cm} | m{4cm} |}
+ 0.1&All part &Creation &Patrick Deutsch\\\hline
+ 0.2&All part &First draft &Patrick Deutsch\\\hline
+ 0.3&All part &Second draft &Patrick Deutsch\\\hline
+ 0.4&All part &Third draft &Didier Weckmann\\\hline
+ 1.0&All part &First official version &Patrick Deutsch\\\hline
+ 1.1&All part &Version for review &Patrick Deutsch\\\hline
+ 1.2&All part &Update for review &Alexis Julin\\\hline
+ 1.3&All part &Update with review remarks &Alexis Julin\\\hline
+\end{supertabular}
+
+
+\tableofcontents
+\listoffiguresandtables
+\newpage
+%=============================
+
+%Uncomment the next line if you need line numbers for tracebility when the document is in review
+%\linenumbers
+%=============================
+
+
+% The actual document starts below this line
+%=============================
+
+%Start here
+
+\section{Introduction}
+The purpose of this document is to provide a functional specification of the demonstrator included in WP5.
+The Demonstrator includes two main parts:
+\begin{itemize}
+\item a simulation of the ETCS on-board equipment including an EVC kernel software and a module equipment interfacing with the EVC kernel.
+\item a test environment for the on-board simulation.
+\end{itemize}
+This Functional Specification will be the main input for the development of the Demonstrator.
+\newpage
+\section{Interaction with other workpackages}
+This WP interacts with some other WPs of the project as follows:
+\subsection{Non direct interaction with WP5}
+\subsubsection{WP1 - Project management/Administration}
+The purpose of this work package is to perform the project management activities and to establish and leverage the communication and controlling infrastructure by a well-defined governance concept. Reporting will be a key issue of the project management. Furthermore, the general guidelines for performing quality management will be defined and monitored. Finally, the work package will take care of intellectual property rights in terms of foreground and background knowledge.
+\subsubsection{WP2 - Requirements for open proof}
+The objective of this work package is to define the requirements for the modelling, verification and validation process in order to satisfy the safety properties of the ERTMS system.
+\subsubsection{WP6 - Dissemination, exploitation and standardisation}
+The purpose of this work package is to organize the market, exploitation, dissemination and standardization activities of the project. The respective activities will be based on individual plans and roadmaps which will be developed at the beginning of the project and which will be tracked and monitored by the Project Steering Board thereafter. The work package will follow an open innovation based approach and provide projects results to the public where appropriate.
+\subsubsection{WP7 - OpenETCS-Language, toolschain and Open Source ecosystem}
+This work package will provide the tool chain, based on formal methods, that is necessary to design, develop, verify and validate the ETCS system. This tool chain will encompass all description levels of the system design from holistic viewpoint to code generation. Specific attention shall be paid to the semantics and traceability of each part of the chain. The formal specification will be used further for verification and code generation. Other uses of the formal specification are conceivable. 
+\subsection{Direct interaction with WP5}
+\subsubsection{WP3 - Modelling of (part of) ETCS specification}
+This work package will provide the formal model of the ETCS system and the source code of the ETCS software. The tool chain developed in work package 7 will be used to model the ETCS system from system specification to software specification and then to generate the code.
+The modelling process will first be applied completely on a Pilot fragment of the subset-026 in order to validate the process, tools, etc... As a second iteration, the other part of subset-026 will be modelled.
+
+Work package 5 shall provide a way to execute code generated from formal methods. Each integration step matches to a more-less independent fragment of subset-026. At the end of OpenETCS project, all EVC code linked to subset-026 will be generated from formal methods, provided by work package 3.
+
+\subsubsection{WP4 - Validation and verification strategy}
+This work package will focus on the validation and verification of the model. At the very first beginning the target and requirements of the V\&V strategy have to be described i.e., what should be checked? Depending on the modelling framework, the modelling language and formalization of the system requirements strategy in form of a concept has to be defined how the consistency, coherence of the model as well as the coverage of system requirements will be transparently verified.
+Additionally, it is important to validate the model i.e., to evidence the equivalence of the model and the ETCS system requirement specification (subset-026). In other words the reliability and acceptance of the model has to be generated, e.g. nothing is lost or added or mutated and so on.
+Additionally, it has to be checked that the code is consistent with the model. The work package is intended to be performed in parallel with the modelling in order to apply the strategy and to generate feedback to the modelling process as well as to measure the quality and maturity of the model.
+Beside a subtask will manage the consideration of all relevant safety requirements in the modelling process.
+
+Work package 4 shall provide to work package 5 scenarios to play in the test environment. Scenario syntax will be defined with work package 5. Work package 4 shall provide a tool able to manage all scenarios created by user.
+\newline
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=\textwidth]{image/oETCS_wk_interaction}
+  \caption{Work packages interactions}
+  \label{fig:Work packages interactions}
+\end{figure}
+\newline
+\newpage
+\section{Overview of ETCS}
+\subsection{Architecture}
+ETCS includes an on-board and a trackside part. An overview of the ETCS on-board and its interfaces is provided in paragraph 2 of subset-026 (see /1/).
+\newline
+\begin{figure}[!h]
+  \centering
+  \includegraphics{image/oETCS_sytem}
+  \caption{ERTMS/ETCS system and its interfaces (subset-026)}
+  \label{fig:ERTMS/ETCS system and its interfaces (subset-026)}
+\end{figure}
+\newline
+\subsection{ETCS on-board part}
+The purpose of the openETCS project is to implement as open source the core of the ETCS on-board, also named EVC kernel. It does not cover the implementation of the following components, which are module resources used by the EVC kernel:
+\begin{itemize}
+\item Balise Transmission Module (BTM)
+\item Loop Transmission Module (LTM
+\item EuroRadio (RIM)
+\item Driver Machine Interface (DMI)
+\item Odometer (ODO)
+\item Train Interface Unit (TIU)
+\item Specific Transmission Module (STM), these are optional
+\item Juridical Recorder Unit (JRU)
+\end{itemize}
+For testing purpose this components may be simulated. However, the interface to communicate to them (API) shall be normalised, published and documented.
+\subsection{Principle of API}
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=\textwidth]{image/oETCS_application}
+  \caption{openETCS Application interfaces}
+  \label{fig:openETCS Application interfaces}
+\end{figure}
+\newpage
+\section{Objectives of the demonstrator}
+\subsection{Project aims}
+The Demonstrator provided by ERSA will be a hosting platform for the results produced by other WPs, especially the EVC code generated from formal methods by the tools chain (providers: WP3 for code and WP 7 for tools chain).
+The Demonstrator will be validated by using the EVC code for baseline 3 produced by ERSA as the first EVC application hosted in the Demonstrator.
+The EVC application developed by ERSA is a full functional implementation of subset-026 (SRS 3.3.0). The test environment allows playing scenarios provided by work package 4. EVC and test environment provided by work package 5 will help the sector for the creation, test and consolidation of the Test Sequences which are part of subset-076. Note subset-076 is not yet up to date but can be used to define guide lines.
+EVC code generated from formal methods will be produced in the project. This code shall replace the equivalent ERSA EVC code. Subfunctions and subcomponents will be integrated step by step in an iterative process. An integration step corresponds to a part of subset-026, for example decoding of Eurobalise's message or level transition management.
+The Demonstrator shall be used throughout the project and beyond the project as a test platform for the continuous integration of newly generated code.
+
+Test environment shall communicate with EVC by an open logical interface (aim 1) for a full simulation. Later, test environment shall interact with hardware interfaces. These interfaces shall communicate with EVC input/output module in order to test code generated from formal method in a hardware context (aim 2).
+\newpage
+\subsubsection{Aim1 - Full simulation}
+\begin{figure}[!h]
+  \centering
+  \includegraphics{image/oETCS_aim1}
+  \caption{Project aim 1}
+  \label{fig:Project aim 1}
+\end{figure}
+\newpage
+\subsubsection{Aim2 - Hardware simulation}
+\begin{figure}[!h]
+  \centering
+  \includegraphics{image/oETCS_aim2}
+  \caption{Project aim 2}
+  \label{fig:Project aim 2}
+\end{figure}
+\newpage
+\subsubsection{Public interfaces overview (Aim1/Aim2)}
+\begin{figure}[!h]
+  \centering
+  \includegraphics{image/oETCS_aim1_2}
+  \caption{Interface aim 1 / aim 2}
+  \label{fig:Interface aim 1 / aim 2}
+\end{figure}
+\newpage
+\subsection{Work package 5 deliverables}
+\subsubsection{On board unit simulator}
+Work package 5 shall deliver a dynamic library with communication modules able to interact with open logical interface (aim 1) and with hardware interfaces (aim 2).
+\subsubsection{Test environment}
+Work package 5 shall deliver an executable with simulator modules able to interact with open logical interface (aim 1) and in a second step with hardware interfaces (aim 2).
+The open logical interface can be considered as an adaptation layer between the API and the Test Environment when no hardware is present. This module is part of the Test Environment deliverable.
+\subsubsection{Test scenarios and reports}
+Test Environment will use test scenarios as input and produce output logs after execution of these scenarios. Inputs and outputs to/from have to be handled and analysed by work package 4.
+\subsection{Implementation steps}
+\subsubsection{Principles}
+In a first step ERSA will use its own implementation of the EVC kernel baseline 3. At the moment SRS 3.3.0 is implemented. ERSA will use its API to interface with the hardware (PC based) and its resources and to communicate with the simulated on-board modules (BTM, RTM, TIU, ODO, DMI, etc...).
+
+ERSA has developed its EVC kernel and API for baseline 3 in C language. The intention is to reuse as much as possible existing work and experience in order to achieve concrete results for the project in accordance with the FPP.
+\newpage
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=\textwidth]{image/oETCS_API_demonstrator}
+  \caption{Use of API in the Demonstrator}
+  \label{fig:Use of API in the Demonstrator}
+\end{figure}
+\subsubsection{Implementation step 1}
+There should be a high level (abstract) definition of the API, independent from any specific software language implementation. This abstract definition should then allow to develop an API, for all languages and hardware platforms of interest (ADA, C ...).
+
+ERSA would then convert the abstract API into a specific dynamic library, usable within the Demonstrator. For example, the test environment application will use this dynamic library to access the EVC kernel.
+Using the test environment, further scenarios can then be created and executed to ensure a proper implementation of the API.
+The first implementation step helps to work without any hardware connected. 
+\newline
+\begin{figure}[!h]
+  \centering
+  \includegraphics{image/oETCS_aim1_step1}
+  \caption{Implementation step 1}
+  \label{fig:Implementation step 1}
+\end{figure}
+\newpage
+\subsubsection{Implementation step 2}
+For this step, two options were identified.
+The first idea was to integrate code generated from formal methods in existing EVC code. For each WP3 delivery, new code generated from formal methods should have been isolated and merged with current code base.
+However, this way seems to be unrealistic and unsafe. It creates huge formal interfaces (between historical code and code produced from formal methods) which can introduce high-risk behaviour due to the current EVC architecture.
+A second option, identified to be the final choice in term of architecture, has purpose to reduce size and number of formal interfaces. A tasks scheduler manages EVC execution; moreover a limited interface allows communicating with code generated from formal methods. The interface between the scheduler and the hosted code shall be defined by both WP3 and WP5. The scheduler describes a set of states, within which standalone functions created by WP3 would be able to run.
+A WP3 delivery shall provide necessary code to complete one task of subset-026, like for example connect to RBC or compute breaking curves.
+\paragraph{Option 1}
+Once code blocks generated from formal method are available, they should be integrated progressively within the non-formal EVC kernel code. Modification of existing code may be needed to achieve the process, so each integration should be done with a validation using the test environment.
+\newline
+\begin{figure}[!h]
+  \centering
+  \includegraphics{image/oETCS_aim1_step2_opt1}
+  \caption{Implementation step 2 option 1}
+  \label{fig:Implementation step 2 option 1}
+\end{figure}
+\newpage
+\paragraph{Option 2}
+There is no difference for test environment part and open logical interface regarding option 1.
+
+Formal interfaces shall be defined by WP3 and WP5 in order to use only one interface between provided scheduler and code generated from formal method provided by WP3.
+OpenETCS-EVC kernel covers partially subset-026.
+A step of integration matches to a complete task defined in subset-026 (curves computations, Eurobalise management, RBC management...). 
+\newline
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=\textwidth]{image/oETCS_aim1_step2_opt2}
+  \caption{Implementation step 2 option 2}
+  \label{fig:Implementation step 2 option 2}
+\end{figure}
+\newpage
+\subsubsection{Implementation step 3 (outside project)}
+\paragraph{Option 1}
+At the end of the process, it is expected that all EVC kernel code will be generated from the openETCS tool chain. Finally the openETCS EVC kernel shall replace the ERSA EVC kernel. However, regarding time plans and resources available, the aim will most likely be reached after the openETCS project.
+\newline
+\begin{figure}[!h]
+  \centering
+  \includegraphics{image/oETCS_aim1_step3_opt1}
+  \caption{Implementation step 3 option 1}
+  \label{fig:Implementation step 3 option 1}
+\end{figure}
+\newpage
+\paragraph{Option 2}
+There is no difference for test environment part and open logical interface regarding option 1.
+Formal interfaces shall be defined by both WP3 and WP5 in order to use only one interface between provided scheduler and code generated from formal method provide by WP3.
+OpenETCS-EVC kernel covers totally subset-026.
+\newline
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=\textwidth]{image/oETCS_aim1_step3_opt2}
+  \caption{Implementation step 3 option 2}
+  \label{fig:Implementation step 3 option 2}
+\end{figure}
+\newpage
+\subsubsection{Implementation step 2A}
+While integrating code produced from formal methods, a reference non-vital platform shall be provided using industrial hardware. This platform shall host the EVC kernel and its modules, the communication between both being performed through the API defined in an earlier step.
+\newline
+\begin{figure}[!h]
+  \centering
+  \includegraphics{image/oETCS_aim2_step2}
+  \caption{Implementation step 2A}
+  \label{fig:Implementation step 2A}
+\end{figure}
+\newpage
+The Demonstrator shall include two main parts: the on-board part and the test environment.
+\newpage
+\section{Architecture of the demonstrator}
+\subsection{On board part}
+The on-board part includes the EVC kernel and all its modules. The EVC kernel shall be clearly separated from the modules and shall communicate with them via the API.
+The following modules will be simulated:
+\begin{itemize}
+\item DMI function
+\item BTM
+\item LTM (option)
+\item Euroradio
+\item BIU \& TIU
+\item Odometry
+\item STM control function (option)
+\item Juridical
+\end{itemize}
+The on-board part will be installed either on a PC or on a platform.
+\subsection{Environment part}
+The environment part includes an off line part and an on line part.
+The off line part includes (provider WP4):
+\begin{itemize}
+\item Tools for data preparation; they are used for the creation of test scenarios
+\item Tools for data exploitation.
+\end{itemize}
+The on line part includes (provider WP5):
+\begin{itemize}
+\item A set of tools for execution of scenarios.
+\end{itemize}
+The execution of a scenario consists of the stimulation of the on-board modules through standard interfaces.
+The environment will be installed on a PC.
+\newpage
+\section{Test Environment for the ON-BOARD}
+\subsection{Off line tools}
+\subsection{Data preparation}
+A template for test scenarios shall be created. This can be based on a combination of experience and the result of other projects.
+\newline
+\newline
+At the end the data collected from projects shall be converted into that template. The data shall be stored in a database.
+\subsection{Data exploitation}
+During execution of test scenarios, the on-board part will generate data to be stored in the JRU. At the same time, the scenario execution tools will also generate log data. Both types of data shall be stored in a database.
+\newline
+\newline
+The data exploitation shall consist of the analysis of such stored data. This analysis shall include criteria for defining whether tests are passed and shall define a template for test reports.
+\subsection{Execution tools environment overview}
+Test environment shall:
+\begin{itemize}
+\item Load scenario
+\item Play a scenario
+\item Export JRU data when simulation ended
+\item Evaluate intermediate conditions (basd on speed, position, TIU values) during simulation
+\item Communicate with open logical interface in aim 1 through its simulation modules
+\item Communicate with hardware interfaces in aim 2 through its simulation modules
+\item Interact with on board unit simulator if user wants to test only one EVC communication module and not the others
+\item Evaluate the final result for a scenario (SUCCESS or FAILED)
+\item Translate all events in scenario into simulation event with its simulation modules and send them to open logical interface (Aim 1) or Hardware interfaces (Aim 2)
+\end{itemize}
+Scenario shall describe :
+\begin{itemize}
+\item Eurobalise positions on the tracks
+\item Eurobalise message on the tracks
+\item Euroloop data
+\item Radio Infill Unit data
+\item All driver actions supported by test environment, like
+\begin{itemize}
+\item level transition acknowledgement
+\item	mode transition acknowledgement
+\item	service brake or emergency acknowledgement
+\item	change level
+\item	open cabin
+\item	set driver Id
+\item	set train data
+\item	TIU action (sleeping mode, non leading mode...)
+\end{itemize}
+\item Train speed profile
+\item Gradient profile
+\item Radio messages coming from RBCs
+\item Intermediate prioprietary conditions based on speed, position, radio message send by EVC...etc. These are user definable check points to ensure critical milestones verification during scenario play.
+\item Initial train configuration
+\item Initial national values
+\item Initial EVC state
+\item Initial RBCs state
+\end{itemize}
+Simulation module shall be used to:
+\begin{itemize}
+\item Interact with the matching communication module in basic software through open logical interface (aim 1) or hardware interface (aim 2)
+\item Transmit a Eurobalise message to the on board part
+\item Transmit a loop message to the on board part (option)
+\item Exchange radio telegrams with the on board part
+\item Exchange STM messages with the on board part (option)
+\item Send odometry information to the on board part. In order to be able to simulate all situations, no real train movement simulation is performed and it is not affected by the brake request from the on-board. It only follows a predefined speed profile defined in the scenario.
+\item Exchange TIU \& BIU information with the on board part
+\item Exchange DMI information with the on board part
+\item Receive JRU information from the on board part
+\end{itemize}
+\newpage
+\section{Abstract interface description}
+The following data should be exchanged between the EVC kernel and its environment through the API. In this description, the data exchanged will be described from the EVC point of view. Its means that:
+\begin{itemize}
+\item Input is data provided by a module to the EVC
+\item Output is data sent by the EVC to a module
+\end{itemize}
+\subsection{Configuration}
+Some data are necessary to initialise and configure the EVC kernel:
+\begin{itemize}
+\item	ETCS Identity
+\item	Available train equipment (radio equipment, brake systems, traction systems, STMs, ...)
+\item	Braking parameters and data
+\item	On-board correction factors
+\item	National values
+\item	Default data to use when the EVC memory is lost
+\item	EVC memory (stored data, ...)
+\end{itemize}
+This preliminary list shall be refined.
+
+\subsection{Odometry interface}
+As the implementation of Odometer functionalities is out of scope of openETCS, only relevant data exchanged with the Odometry functions are described.
+\subsubsection{Inputs :}
+\begin{itemize}
+\item	Time and movement data
+\begin{itemize}
+\item	Reference time
+\item	Train movement direction (Nominal, Reverse, Unknown)
+\item	Estimated train position
+\item	Position accuracy (over- and underestimation)
+\item	Estimated speed
+\item	Speed accuracy (over- and underestimation)
+\item	Estimated acceleration
+\end{itemize}
+\item	Odometer status
+\end{itemize}
+\subsubsection{Outputs :}
+\begin{itemize}
+\item Optionally, recalibration data.
+\end{itemize}
+This data shall be confirmed.
+\subsection{Brake/Train interface}
+The inputs and outputs with the train are described in the subset-034 (see /4/).
+\subsubsection{Inputs :}
+\begin{itemize}
+\item	ETCS Main Switch status
+\item	Cab status
+\item	Direction controller
+\item	Train Integrity status
+\item	Sleeping Permission
+\item	Non Leading Permission
+\item	Passive Shunting Permission
+\item	Regenerative Brake status
+\item	Magnetic Shoe Brake status
+\item	Eddy Current Brake status
+\item	Electro Pneumatic (EP) status
+\item	Additional brake status
+\item	Train data information
+\item	Type of train data entry
+\item	Traction status
+\item	National System Isolation status
+\item	Brake pressure
+\end{itemize}
+\subsubsection{Outputs :}
+\begin{itemize}
+\item	Service Brake command
+\item	Emergency Brake command
+\item	Traction Cut-Off command
+\item	Regenerative Brake inhibition
+\item	Magnetic Shoe Brake inhibition
+\item	Eddy Current Brake for SB inhibition
+\item	Eddy Current Brake for EB inhibition
+\item	Change of traction system
+\item	Pantograph command
+\item	Air Tightness command
+\item	Main Power Switch command (sometimes named main circuit breaker)
+\item	Isolation status
+\item	Station location
+\item	Allowed current consumption
+\end{itemize}
+\subsection{Balise interface}
+As the implementation of BTM functionalities is out of scope of openETCS, only relevant data exchanged with the BTM are described.
+\subsubsection{Inputs :}
+\begin{itemize}
+\item	Reception of balise message:
+\begin{itemize}
+\item	Odometer stamp of the centre of the balise and accuracy
+\item	Time stamp of reception
+\item	Balise message (according to paragraph 7 and 8 of subset-026)
+\end{itemize}
+\item	BTM status information
+\begin{itemize}
+\item	Failure, alarm
+\end{itemize}
+\end{itemize}
+\subsubsection{Outputs :}
+None
+\subsection{Loop interface (OPTION)}
+As the implementation of LTM functionalities is out of scope of openETCS, only relevant data exchanged with the LTM are described.
+\subsubsection{Inputs :}
+\begin{itemize}
+\item	Reception of loop message
+\begin{itemize}
+\item	Time stamp of reception
+\item	Loop message (according to paragraph 7 and 8 of subset-026)
+\end{itemize}
+\item	LTM status information
+\begin{itemize}
+\item	Failure, alarm
+\end{itemize}
+\end{itemize}
+\subsubsection{Outputs :}
+\begin{itemize}
+\item	Configuration of loop antenna (spread spectrum code)
+\end{itemize}
+\subsection{Radio interface}
+As the implementation of EuroRadio functionalities is out of scope of openETCS, only relevant data exchanged with the EuroRadio subsystem are described.
+
+The management of radio network / safe connection and exchange of radio messages is performed via service primitives as described in subset-037 (see /7/).
+
+\subsubsection{Service primitives}
+\begin{itemize}
+\item	Safe connection set-up
+\begin{itemize}
+\item	Request
+\item	Indication
+\item	Response
+\item	Confirmation
+\end{itemize}
+\item	Data transfer
+\begin{itemize}
+\item	Request
+\item	Indication
+\end{itemize}
+\item		Connection release
+\begin{itemize}
+\item	Request
+\item	Indication
+\end{itemize}
+\item	Error reporting
+\begin{itemize}
+\item	Indication
+\end{itemize}
+\item	High priority data
+\begin{itemize}
+\item	Request
+\item	Indication
+\end{itemize}
+\item	Network registration
+\begin{itemize}
+\item	Request
+\item	Indication
+\end{itemize}
+\item	Network permission
+\begin{itemize}
+\item	Request
+\item	Indication
+\end{itemize}
+\end{itemize}
+\subsection{STM interface (OPTION)}
+The data (STM messages) exchanged with the National Systems are described in subset-035 (see /5/) and subset-058 (see /9/).
+\subsection{JRU interface}
+The recording of juridical data is deeply linked to the ETCS core functionalities and should be part of the openETCS application
+\subsubsection{Inputs :}
+None
+\subsubsection{Outputs :}
+All juridical information described in subset-027 (see /3/) should be transmitted to the Recording Unit:
+\begin{itemize}
+\item	General message
+\item	Train data 
+\item	Emergency brake command state
+\item	Service brake command state
+\item	Message to radio infill unit
+\item	Telegram from balise
+\item	Message from Euroloop 
+\item	Message from radio infill unit
+\item	Message from RBC
+\item	Message to RBC
+\item	Driver’s actions
+\item	Balise group error
+\item	Radio error
+\item	STM information
+\item	Information from cold movement detector
+\item	Start displaying fixed text message 
+\item	Stop displaying fixed text message 
+\item	Start displaying plain text message 
+\item	Stop displaying plain text message 
+\item	Speed and distance monitoring information 
+\item	DMI symbol status
+\item	DMI sound status
+\item	DMI system status message
+\item	Additional data
+\item	SR speed/distance entered by the driver
+\item	NTC selected
+\item	Safety critical fault in mode SL, NL or PS
+\item	Virtual balise cover set by the driver
+\item	Virtual balise cover removed by the driver
+\item	Sleeping input
+\item	Passive shunting input
+\item	Non leading input
+\item	Regenerative brake status
+\item	Magnetic shoe brake status
+\item	Eddy current brake status
+\item	Electro pneumatic brake status
+\item	Additional brake status
+\item	Cab status
+\item	Direction controller position
+\item	Traction status
+\item	Type of train data
+\item	National system isolation
+\item	Traction cut off command state
+\item	ETCS on-board proprietary juridical data
+\end{itemize}
+\subsection{Driver interface}
+As the implementation of DMI functionalities is out of scope of openETCS, only relevant data exchanged with the DMI will be described.
+The description of the data flow should cover the functionalities related to the data displayed and driver actions on DMI as described in ERA\_ERTMS\_015560 (see /2/).
+\subsubsection{Inputs :}
+\begin{itemize}
+\item Activity status of the DMI
+\item	Driver Request or Acknowledgement (other than text)
+\item	Text Message Acknowledgment
+\item	Train Data Validation
+\item	Version information of the DMI
+\item	Icon Acknowledgment 
+\item	Indication of audible information on DMI
+\item	Set Virtual Balise Cover
+\item	Remove Virtual Balise Cover
+\item	Entered radio network
+\item	VBC data (set) validation
+\item	VBC data (remove) validation
+\item	Output information related to NTC
+\end{itemize}
+\subsubsection{Outputs :}
+\begin{itemize}
+\item	Dynamic Data, like current train speed, target data…
+\item	Request to enable/disable driver menus and buttons
+\item	Request to input certain data (driver id, train data…)
+\item	EVC Coded Train Data to be validated by EVC
+\item	Predefined or Plain Text Message
+\item	Description of track (speed and gradient profile…)
+\item	Request for the DMI version information
+\item	Request to display one or more icon(s) in any area
+\item	Display the EVC operated system version
+\item	State of DMI display (cabin activation)
+\item	List of available levels
+\item	List of available radio network
+\item	List of VBCs stored on-board
+\item	Coded VBC data (set) to be validated by driver
+\item	Coded VBC data (remove) to be validated by driver
+\item	Input information related to NTC
+\item	Description of NTC data entry window
+\end{itemize}
+\subsubsection{Two-way packets}
+\begin{itemize}
+\item	Default or Entered Driver Identifier
+\item	Default or Entered Train Running Number
+\item	Default or Entered Staff Responsible Data
+\item	Default or Entered Train Data 
+\item	Default or Entered Adhesion Factor Data
+\item	Default or entered ETCS Level
+\item	Default or entered RBC contact info (RBC data and radio network ID)
+\end{itemize}
+This list shall be refined.
+\newpage
+\section{Test}
+\subsection{Input (Work package 4)}
+Track and train data shall be collected from concrete projects.
+\subsection{Test case creation (Work package 4)}
+Templates for test cases and/or test scenarios shall be defined. The input data shall be converted into test scenarios.
+A required test case will be to simulate the Utrecht-Amsterdam track as it is relevant for openETCS simulation.
+\subsection{Test scenario importation (Work package 5)}
+Test scenarios shall be imported in the test execution environment.
+\subsection{Test execution (Work package 5)}
+Test scenarios shall be executed, and the results shall be stored. Stored information will include data provided by the EVC kernel (JRU files) and data provided by the test tools.
+\subsection{Test results exportation (Work package 5)}
+The results of the executed tests shall be exported to templates to be defined in the project.
+\subsection{Test results ecploitation (Work package 4)}
+The results shall be analysed and a report shall be generated. A template for the reports has to be defined in the project.
+\newpage
+\section{Creation of non vital platform}
+\subsection{Input}
+The NON VITAL platform shall be provided by a project partner. It shall be delivered with all means to enable the implementation of software:
+\begin{itemize}
+\item Development tools for C language and support to their use,
+\item Module on-board modules, APIs and drivers.
+\end{itemize}
+\subsection{Software implementation}
+The EVC software which shall be installed on this platform cannot be defined at this stage. It is likely that a hybrid version of the EVC kernel based on ERSA code and project code shall be implemented in the platform.
+\subsection{Availability of physical interface}
+The platform shall be equipped with physical interfaces, to enable their stimulation via ERTMS test tools owned by ERTMS Test Laboratories and/or ERSA.
+It is not planned to create a complete Test Environment from scratch.
+\newpage
+\section{Tests with non vital platform}
+\subsection{Test case creation (Work package 4)}
+The test data produced in the first part of the project (see chapter 8) shall be reused for performing tests. Only a subset shall be used.
+\subsection{Test execution (Work package 5)}
+Tests shall be performed and results stored in a database. The same principles as defined in chapter 8 shall be reused.
+\subsection{Test results analysis (Work package 4)}
+The test data shall be analysed and conclusions shall be drawn. The templates defined in chapter 8 shall be reused. Only a subset will be needed.
+
+
+%===================================================
+%Do NOT change anything below this line
+
+\end{document}
