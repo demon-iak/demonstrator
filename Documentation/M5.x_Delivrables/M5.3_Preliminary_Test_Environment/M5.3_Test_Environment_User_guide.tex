@@ -42,8 +42,8 @@
 \techassessorname{Didier Weckmann}
 \techassessoraffil{ERSA}
 
-\qualityassessorname{Alain Masson}
-\qualityassessoraffil{ERSA}
+\qualityassessorname{Izaskun de La Torre}
+\qualityassessoraffil{SQS}
 
 \approvalname{Klaus-R\"udiger Hase}
 \approvalaffil{DB Netz}
@@ -96,6 +96,7 @@ Version & Section & Modification / Description & Author \\\hline}
 2.7 &All parts&Add WAIT\_DYNAMIC commands &Didier Weckmann \\\hline
 2.8 &All parts&Add EXPECTED\_TO\_FAIL command &Didier Weckmann \\\hline
 2.9 &All parts&Add WAIT\_BUTTON ACK\_XXX &Didier Weckmann \\\hline
+2.10 &All parts&Add EVC\_CONFIG, NV\_FROM\_HEX\_BUFFER and COUNTRIES\_ID &Alexis Julin \\\hline
 \end{supertabular}
 
 
@@ -1667,6 +1668,29 @@ This section is composed of a succession of commands. These commands can request
 				
 			\end{longtable}
 			
+		\item COUNTRIES\_ID:
+		
+			\begin{longtable}{|l|l|}
+				\caption{COUNTRIES\_ID}\\ 
+				\hline
+				
+					\begin{minipage}[t]{0.22\linewidth} \textbf{Description}	\end{minipage} 
+				&	\begin{minipage}[t]{0.78\linewidth} A list of country identifiers for which default national values are valid. \end{minipage} \\
+				
+				\hline
+				
+					\begin{minipage}[t]{0.22\linewidth} \textbf{Default value}	\end{minipage} 
+				&	\begin{minipage}[t]{0.78\linewidth} 0 \end{minipage} \\
+				
+				\hline
+				
+					\begin{minipage}[t]{0.22\linewidth} \textbf{Example}	\end{minipage} 
+				&	\begin{minipage}[t]{0.78\linewidth} COUNTRIES\_ID = 253;254 \end{minipage} \\
+				
+				\hline
+				
+			\end{longtable}			
+			
 		\item DRIVER\_ADHESION:
 		
 			\begin{longtable}{|l|l|}
@@ -2183,6 +2207,38 @@ This section is composed of a succession of commands. These commands can request
 				\hline
 				
 			\end{longtable}
+			
+		\item NV\_FROM\_HEX\_BUFFER:
+		
+			\begin{longtable}{|l|l|}
+				\caption{NV\_FROM\_HEX\_BUFFER}\\ 																																
+				\hline
+				
+					\begin{minipage}[t]{0.22\linewidth} \textbf{Description}	\end{minipage} 
+				&	\begin{minipage}[t]{0.78\linewidth} Allows to initialize EVC with a general radio message (24) containing packet 3. \end{minipage} \\
+				
+				\hline
+				
+					\begin{minipage}[t]{0.22\linewidth} \textbf{Format}	\end{minipage} 
+				&	\begin{minipage}[t]{0.78\linewidth}A list of hexadecimal values splited by comma that represents general radio message\end{minipage} \\
+				
+				\hline
+																																									
+					\begin{minipage}[t]{0.22\linewidth} \textbf{Example}	\end{minipage} 
+				&	\begin{minipage}[t]{0.78\linewidth} NV\_FROM\_HEX\_BUFFER = 18, 08, 80, 00, 00, 00, 00, 00, 00, 00, 68, 31, 10, 00, 02, 3f, 4f, f0, c1, 83, 20, 0a, 00, 28, 06, 18, 03, 27, f8, 0c, 84, 69, ff, fd \end{minipage} \\	
+						
+				\hline
+										
+					\begin{minipage}[t]{0.22\linewidth} \textbf{Default value}	\end{minipage} 
+				&	\begin{minipage}[t]{0.78\linewidth} none \end{minipage} \\
+				
+				\hline
+					\begin{minipage}[t]{0.22\linewidth} \textbf{Warning}	\end{minipage} 
+				&	\begin{minipage}[t]{0.78\linewidth} If NV\_FROM\_HEX\_BUFFER is defined all other values define in this section are removed\end{minipage} \\
+				
+				\hline
+				
+			\end{longtable}
 		
 	\end{itemize}
 	
@@ -2414,6 +2470,43 @@ This section is composed of a succession of commands. These commands can request
 				
 					\begin{minipage}[t]{0.22\linewidth} \textbf{Default value}	\end{minipage} 
 				&	\begin{minipage}[t]{0.78\linewidth} GENERIC \end{minipage} \\
+				
+				\hline
+				
+			\end{longtable}
+			
+		\item EVC\_CONFIG:
+																			
+			\begin{longtable}{|l|l|}
+				\caption{EVC\_CONFIG}\\ 
+				\hline
+				
+					\begin{minipage}[t]{0.22\linewidth} \textbf{Description} \end{minipage} 
+				&	\begin{minipage}[t]{0.78\linewidth} Allows to activate EVC configuration. \end{minipage} \\
+				
+				\hline
+																																									
+					\begin{minipage}[t]{0.22\linewidth} \textbf{Values}	\end{minipage} 
+				&	\begin{minipage}[t]{0.78\linewidth} \begin{itemize} 
+																								\item CFG\_RADIO\_INTERNAL\_TIME\_STAMP : Internal time stamping (not use T\_TRAIN)
+																								\item CFG\_USE\_JRU : Use JRU (generates JRU data file)
+																								\item CFG\_RECORD\_TO\_CSV\_FILE : Record supervision data to CSV file
+																								\item CFG\_BAL\_WITH\_ODO\_STAMP : Balise are received with odo stamp
+																								\item CFG\_LOOP\_WITH\_SSCODE : Loop are received with spread spectrum code
+																								\item CFG\_LOCAL\_TIME\_STAMP : Request local time stamp otherwise GMT time in log \& JRU record
+																								\item CFG\_RECORDER\_LOG\_ADD\_FULL\_TIME\_STAMP : add time stamp in EuroCabLog.dat like 2009-05-29/08:15:21.29
+																							\end{itemize} 
+					\end{minipage} \\
+				
+				\hline
+				
+					\begin{minipage}[t]{0.22\linewidth} \textbf{Example}	\end{minipage} 
+				&	\begin{minipage}[t]{0.78\linewidth} EVC\_CONFIG = CFG\_LOOP\_WITH\_SSCODE|CFG\_USE\_JRU \end{minipage} \\
+				
+				\hline
+			
+					\begin{minipage}[t]{0.22\linewidth} \textbf{Warning}	\end{minipage} 
+				&	\begin{minipage}[t]{0.78\linewidth} CFG\_RADIO\_INTERNAL\_TIME\_STAMP and CFG\_BAL\_WITH\_ODO\_STAMP are mandatories for EVC then EVC set these configurations automatically and they can be removed\end{minipage} \\
 				
 				\hline
 				
