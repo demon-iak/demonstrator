@@ -1,0 +1,539 @@
+\documentclass{template/openetcs_article}
+% Use the option "nocc" if the document is not licensed under Creative Commons
+%\documentclass[nocc]{template/openetcs_article}
+\usepackage{lipsum,url}
+\usepackage{supertabular}
+\usepackage{multirow}
+\usepackage{color, colortbl}
+\definecolor{gray}{rgb}{0.8,0.8,0.8}
+\usepackage[modulo]{lineno}
+\graphicspath{{./template/}{.}{./images/}}
+
+\begin{document}
+\frontmatter
+\project{openETCS}
+
+%Please do not change anything above this line
+%============================
+
+% The document metadata is defined below
+
+%assign a report number here
+\reportnum{OETCS/WP5/M5.X}
+
+%define your workpackage here
+\wp{Work-Package 5: ``Demonstrator''}
+
+%set a title here
+\title{ERSA Demonstrator 1st release API}
+
+%set a subtitle here
+%\subtitle{A template for short documents. Adapted from report template.}
+
+%set the date of the report here
+\date{August 2014}
+
+
+%document approval
+%define the name and affiliation of the people involved in the documents approbation here
+\creatorname{Nicolas Van Landeghem}
+\creatoraffil{ERSA}
+
+\techassessorname{Nicolas Van Landeghem}
+\techassessoraffil{ERSA}
+
+\qualityassessorname{Ainhoa Gracia}
+\qualityassessoraffil{SQS}
+
+\approvalname{Klaus-R\"udiger Hase}
+\approvalaffil{DB Netz}
+
+
+%define a list of authors and their affiliation here
+
+\author{Nicolas Van Landeghem, Didier Weckmann, Alexis Julin, St\'ephane Chenevoy}
+
+\affiliation{ERSA\\
+5 Rue Maurice Blin \\
+67500 Haguenau, France}
+
+
+
+% define the coverart
+\coverart[width=350pt]{openETCS_EUPL}
+
+%define the type of report
+\reporttype{Description of work}
+
+
+%\begin{abstract}
+%define an abstract here
+%  \lipsum[12-13]
+%\end{abstract}
+
+%=============================
+\maketitle
+
+%Modification history
+%if you do not need a modification history table for your document simply comment out the eight lines below
+%=============================
+
+
+\section*{Modification History}
+\tablefirsthead{
+\hline
+\rowcolor{gray}
+Version & Section & Modification / Description & Author \\\hline}
+\begin{supertabular}{| m{1.2cm} | m{1.2cm} | m{6.6cm} | m{4cm} |}
+ 1.0&All Parts &Document creation&Nicolas Van Landeghem \\\hline
+\end{supertabular}
+
+
+\tableofcontents
+\newpage
+%=============================
+
+%Uncomment the next line if you need line numbers for tracebility when the document is in review
+%\linenumbers
+%=============================
+
+
+% The actual document starts below this line
+%=============================
+
+%Start here
+\section{Introduction}
+The purpose of this document is to describe ERSA's API of its EVC simulator: its breakdown into modules, the exchanged data and the interfaces with external devices. The EVC simulator behaves according to the SRS Class 1 version 3.3.0.
+\newline
+\newpage
+\section{API content}
+The API definition is split between its public types, structures, methods and members. Methods are divided into families, e.g. check consistency and basic configuration, control EVC simulation, set EVC configuration data, store data, handle train data, handle internal events and retrieve internal data.
+\subsection{Function prototypes}
+Initialise the EVC simulator: creation of EVC data structure, initialisation of interfaces
+\newline [in] ulLogId, key used as prefix for log files
+\newline return 0 on success
+\newline int32\_t Init(uint32\_t ulLogId);
+\newline
+\newline Start the EVC simulator modules
+\newline return 0 on success
+\newline int32\_t Start\_processes(void);
+\newline
+\newline Start the EVC simulation
+\newline return 0 on success
+\newline int32\_t Run(void);
+\newline
+\newline Stop the EVC simulation
+\newline return 0 on success
+\newline int32\_t Stop(void);
+\newline
+\newline Get port (socket) used for STM communication (between STM module and STM controller).
+If SetSTMCommunicationPort() has not been called previously, the server will look for an available socket in a certain range. May stall if the stm server is being initialized.
+\newline return Port (socket) number to be used for STM communication
+\newline int32\_t WaitSTMCommunicationPort(void);
+\newline
+\newline Modify the EVC configuration. It should be call just after constructor
+\newline [in] bSet, indicate if the config should be set or reset
+\newline [in] Config, flag to identify the configuration
+\newline void Modify\_EVC\_Configuration(bool bSet, eConfigData Config);
+\newline
+\newline Get current train speed (km/h)
+\newline return train speed in km/h
+\newline double GetTrainSpeed(void);
+\newline
+\newline Get EOA location
+\newline return EOA location or 0 if not applicable
+\newline t\_distance GetEstimatedFrontLoc(void);
+\newline
+\newline Get current on-board ETCS mode
+\newline return train mode as M\_MODE
+\newline eTrainMode GetCurrentMode(void);
+\newline
+\newline Get current on-board ETCS level
+\newline return train level
+\newline eLevel GetCurrentLevel(void);
+\newline
+\newline Get EOA location
+\newline return EOA location or 0 if not applicable
+\newline t\_distance GetEoaLocation(void);
+\newline
+\newline Get EOA speed (km/h)
+\newline return EOA speed (km/h) or 0 if not applicable
+\newline double GetEoaSpeed(void);
+\newline
+\newline Get messages from UI
+\newline [out] pointer to UI message
+\newline [out] pointer to type of message (balise, loop, radio, other)
+\newline return true if message is valid, 0 otherwise
+\newline bool GetIhmMessages(char * szMessage, eMSG\_TYPE * type);
+\newline
+\newline Get driver action produced on DMI
+\newline [out] location where action was sent
+\newline [out] timestamp when action was sent
+\newline [out] action requested by driver
+\newline [out] list of data if relevant (driver id, etc.)
+\newline return true if message is valid, 0 otherwise
+\newline bool GetDriverAction(t\_distance \& rdLocation, t\_time \& rdTimeStamp, eDriverActionInfo \&  rDriverAction, SVarDataList \& rVarDataList);
+\newline 
+\newline Get track condition profile
+\newline [out] list of track conditions information
+\newline [in/out] counter used to test changes
+\newline return true if list is available and has changed (according to counter value)
+\newline bool GetTCProfile(STCInfoList \& rTCInfoList, int32\_t \& rlCounter);
+
+\subsection{Types}
+\begin{longtable}{|l|l|l|}
+	\caption{Basic types}\\ 
+	\hline
+		\begin{minipage}[t]{0.20\linewidth} \textbf{Data type}	\end{minipage}
+	&	\begin{minipage}[t]{0.20\linewidth} \textbf{Variable name}	\end{minipage} 
+	&	\begin{minipage}[t]{0.65\linewidth} \textbf{Comment} \end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.20\linewidth} Double	\end{minipage} 
+	&	\begin{minipage}[t]{0.20\linewidth} t\_time 	\end{minipage} 
+	&	\begin{minipage}[t]{0.65\linewidth} Time in s 	\end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.20\linewidth} Double	\end{minipage} 
+	&	\begin{minipage}[t]{0.20\linewidth} t\_distance		\end{minipage} 
+	&	\begin{minipage}[t]{0.65\linewidth} Distance in m 	\end{minipage} \\
+	\hline
+\end{longtable}	
+\newpage
+\subsection{Enumerations}
+\begin{longtable}{|l|l|l|}
+	\caption{eConfigData} \\ 
+	\hline
+		\begin{minipage}[t]{0.45\linewidth} \textbf{Enum member}	\end{minipage}
+	&	\begin{minipage}[t]{0.10\linewidth} \textbf{Enum value}	\end{minipage} 
+	&	\begin{minipage}[t]{0.50\linewidth} \textbf{Comment} \end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.45\linewidth} CFG\_RADIO\_INTERNAL\_TIME\_STAMP	\end{minipage} 
+	&	\begin{minipage}[t]{0.10\linewidth} 0 \end{minipage} 
+	&	\begin{minipage}[t]{0.50\linewidth} Internal time stamping (not use T\_TRAIN) \end{minipage}\\
+	\hline
+		\begin{minipage}[t]{0.45\linewidth} CFG\_USE\_JRU	\end{minipage} 
+	&	\begin{minipage}[t]{0.10\linewidth} 1 	\end{minipage} 
+	&	\begin{minipage}[t]{0.50\linewidth} Use JRU (generates JRU data file)	\end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.45\linewidth} CFG\_RECORD\_TO\_CSV\_FILE	\end{minipage} 
+	&	\begin{minipage}[t]{0.10\linewidth} 2 \end{minipage} 
+	&	\begin{minipage}[t]{0.50\linewidth} Record supervision data to CSV file \end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.45\linewidth} CFG\_LOOP\_WITH\_SSCODE	\end{minipage} 
+	&	\begin{minipage}[t]{0.10\linewidth} 3	\end{minipage} 
+	&	\begin{minipage}[t]{0.50\linewidth} Loop are received with spread spectrum code \end{minipage} \\
+	\hline	
+		\begin{minipage}[t]{0.45\linewidth} CFG\_BAL\_WITH\_ODO\_STAMP	\end{minipage} 
+	&	\begin{minipage}[t]{0.10\linewidth} 4	\end{minipage} 
+	&	\begin{minipage}[t]{0.50\linewidth} Balise are received with odo stamp \end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.45\linewidth} CFG\_LOCAL\_TIME\_STAMP	\end{minipage} 
+	&	\begin{minipage}[t]{0.10\linewidth} 5	\end{minipage} 
+	&	\begin{minipage}[t]{0.50\linewidth} Request local time stamp otherwise GMT time in log \& JRU record \end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.45\linewidth} CFG\_RECORDER\_LOG\_ADD\_FULL \_TIME\_STAMP	\end{minipage} 
+	&	\begin{minipage}[t]{0.10\linewidth} 6	\end{minipage} 
+	&	\begin{minipage}[t]{0.50\linewidth} add time stamp in EuroCabLog.dat like 2009-05-29/08:15:21.29 \end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.45\linewidth} CONFIG\_SIZE	\end{minipage} 
+	&	\begin{minipage}[t]{0.10\linewidth} 7	\end{minipage} 
+	&	\begin{minipage}[t]{0.50\linewidth} Maximum number of config value\end{minipage} \\
+	\hline
+\end{longtable}
+
+\begin{longtable}{|l|l|l|}
+	\caption{eTrainMode, ETCS train mode} \\ 
+	\hline
+		\begin{minipage}[t]{0.45\linewidth} \textbf{Enum member}	\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} \textbf{Enum value}	\end{minipage} 
+	&	\begin{minipage}[t]{0.45\linewidth} \textbf{Comment} \end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.45\linewidth} MODE\_FULL	\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 0	\end{minipage} 
+	&	\begin{minipage}[t]{0.45\linewidth} Full supervision \end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.45\linewidth} MODE\_ON\_SIGHT \end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 1	\end{minipage} 
+	&	\begin{minipage}[t]{0.45\linewidth} On sight\end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.45\linewidth} MODE\_STAFF\_RESP \end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 2	\end{minipage} 
+	&	\begin{minipage}[t]{0.45\linewidth} Staff responsible \end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.45\linewidth} MODE\_SHUNTING \end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 3	\end{minipage} 
+	&	\begin{minipage}[t]{0.45\linewidth} Shunting \end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.45\linewidth} MODE\_UNFITTED \end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 4	\end{minipage} 
+	&	\begin{minipage}[t]{0.45\linewidth} Unfitted \end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.45\linewidth} MODE\_SLEEPING \end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 5	\end{minipage} 
+	&	\begin{minipage}[t]{0.45\linewidth} Sleeping \end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.45\linewidth} MODE\_STAND\_BY \end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 6	\end{minipage} 
+	&	\begin{minipage}[t]{0.45\linewidth} Stand by \end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.45\linewidth} MODE\_TRIP\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 7\end{minipage} 
+	&	\begin{minipage}[t]{0.45\linewidth} Trip\end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.45\linewidth} MODE\_POST\_TRIP	\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 8	\end{minipage} 
+	&	\begin{minipage}[t]{0.45\linewidth} Post trip	\end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.45\linewidth} MODE\_SYST\_FAILURE	\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 9	\end{minipage} 
+	&	\begin{minipage}[t]{0.45\linewidth} System failure	\end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.45\linewidth} MODE\_ISOLATION	\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 10	\end{minipage} 
+	&	\begin{minipage}[t]{0.45\linewidth} Isolation	\end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.45\linewidth} MODE\_NON\_LEADING	\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 11	\end{minipage} 
+	&	\begin{minipage}[t]{0.45\linewidth} Non leading	\end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.45\linewidth} MODE\_LIMITED\_SUP	\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 12	\end{minipage} 
+	&	\begin{minipage}[t]{0.45\linewidth} Limited supervision	\end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.45\linewidth} MODE\_STM\_NATIONAL	\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 13	\end{minipage} 
+	&	\begin{minipage}[t]{0.45\linewidth} STM national	\end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.45\linewidth} MODE\_REVERSING	\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 14	\end{minipage} 
+	&	\begin{minipage}[t]{0.45\linewidth} Reversing	\end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.45\linewidth} MODE\_PASSIVE\_SH	\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 15	\end{minipage} 
+	&	\begin{minipage}[t]{0.45\linewidth} Passive shunting	\end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.45\linewidth} MODE\_UNKNOWN	\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 16	\end{minipage} 
+	&	\begin{minipage}[t]{0.45\linewidth} Unknown	\end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.45\linewidth} MODE\_NO\_POWER	\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 17	\end{minipage} 
+	&	\begin{minipage}[t]{0.45\linewidth} No power	\end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.45\linewidth} MODE\_MAX\_NB	\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 18	\end{minipage} 
+	&	\begin{minipage}[t]{0.45\linewidth} Maximum number of mode value	\end{minipage} \\
+	\hline
+\end{longtable}
+
+\newpage
+\begin{longtable}{|l|l|l|}
+	\caption{eLevel, ETCS level} \\ 
+	\hline
+		\begin{minipage}[t]{0.45\linewidth} \textbf{Enum member}	\end{minipage}
+	&	\begin{minipage}[t]{0.10\linewidth} \textbf{Enum value}	\end{minipage} 
+	&	\begin{minipage}[t]{0.50\linewidth} \textbf{Comment} \end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.45\linewidth} LEVEL\_0 \end{minipage} 
+	&	\begin{minipage}[t]{0.10\linewidth} 0 \end{minipage} 
+	&	\begin{minipage}[t]{0.50\linewidth} Level 0 \end{minipage}\\
+	\hline
+		\begin{minipage}[t]{0.45\linewidth} LEVEL\_STM \end{minipage} 
+	&	\begin{minipage}[t]{0.10\linewidth} 1 \end{minipage} 
+	&	\begin{minipage}[t]{0.50\linewidth} Level STM \end{minipage}\\
+	\hline
+		\begin{minipage}[t]{0.45\linewidth} LEVEL\_1 \end{minipage} 
+	&	\begin{minipage}[t]{0.10\linewidth} 2 \end{minipage} 
+	&	\begin{minipage}[t]{0.50\linewidth} Level 1 \end{minipage}\\
+	\hline
+		\begin{minipage}[t]{0.45\linewidth} LEVEL\_2 \end{minipage} 
+	&	\begin{minipage}[t]{0.10\linewidth} 3 \end{minipage} 
+	&	\begin{minipage}[t]{0.50\linewidth} Level 0 \end{minipage}\\
+	\hline
+		\begin{minipage}[t]{0.45\linewidth} LEVEL\_3 \end{minipage} 
+	&	\begin{minipage}[t]{0.10\linewidth} 4 \end{minipage} 
+	&	\begin{minipage}[t]{0.50\linewidth} Level 3 \end{minipage}\\
+	\hline
+		\begin{minipage}[t]{0.45\linewidth} LEVEL\_UNKNOWN \end{minipage} 
+	&	\begin{minipage}[t]{0.10\linewidth} 5 \end{minipage} 
+	&	\begin{minipage}[t]{0.50\linewidth} Level unknown \end{minipage}\\
+	\hline
+		\begin{minipage}[t]{0.45\linewidth} NB\_LEVEL \end{minipage} 
+	&	\begin{minipage}[t]{0.10\linewidth} 6 \end{minipage} 
+	&	\begin{minipage}[t]{0.50\linewidth} Number of different level \end{minipage}\\
+	\hline
+\end{longtable}
+
+\begin{longtable}{|l|l|l|}
+	\caption{eDriverActionInfo, DMI actions from driver}\\
+	\hline
+		\begin{minipage}[t]{0.60\linewidth} \textbf{Enum member}	\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} \textbf{Enum value}	\end{minipage} 
+	&	\begin{minipage}[t]{0.30\linewidth} \textbf{Comment} \end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.60\linewidth}	DMI\_ACTION\_DRIVER\_ID\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 0 	\end{minipage}
+	&	\begin{minipage}[t]{0.30\linewidth} \end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.60\linewidth}	DMI\_ACTION\_TRAIN\_RUNNING\_NUMBER\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 1 	\end{minipage}
+	&	\begin{minipage}[t]{0.30\linewidth} \end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.60\linewidth}	DMI\_ACTION\_TRAIN\_DATA\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 2 	\end{minipage}
+	&	\begin{minipage}[t]{0.30\linewidth} \end{minipage}\\
+	\hline
+		\begin{minipage}[t]{0.60\linewidth}	DMI\_ACTION\_SR\_DATA\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 3 	\end{minipage}
+	&	\begin{minipage}[t]{0.30\linewidth} \end{minipage} \\
+		\hline
+		\begin{minipage}[t]{0.60\linewidth}	DMI\_ACTION\_LEVEL\_0\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 4 	\end{minipage}
+	&	\begin{minipage}[t]{0.30\linewidth} \end{minipage} \\
+		\hline
+		\begin{minipage}[t]{0.60\linewidth}	DMI\_ACTION\_LEVEL\_1\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 5 	\end{minipage}
+	&	\begin{minipage}[t]{0.30\linewidth} \end{minipage}\\
+		\hline
+		\begin{minipage}[t]{0.60\linewidth}	DMI\_ACTION\_LEVEL\_2\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 6 	\end{minipage}
+	&	\begin{minipage}[t]{0.30\linewidth} \end{minipage}\\
+		\hline
+		\begin{minipage}[t]{0.60\linewidth}	DMI\_ACTION\_LEVEL\_3\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 7 	\end{minipage}
+	&	\begin{minipage}[t]{0.30\linewidth} \end{minipage}\\
+		\hline
+		\begin{minipage}[t]{0.60\linewidth}	DMI\_ACTION\_LEVEL\_STM\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 8 	\end{minipage}
+	&	\begin{minipage}[t]{0.30\linewidth} \end{minipage}\\
+		\hline
+		\begin{minipage}[t]{0.60\linewidth}	DMI\_ACTION\_START\_OF\_MISSION\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 9 	\end{minipage}
+	&	\begin{minipage}[t]{0.30\linewidth} \end{minipage}\\
+		\hline
+		\begin{minipage}[t]{0.60\linewidth}	DMI\_ACTION\_SLIPPERY\_TRACK\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 10 	\end{minipage}
+	&	\begin{minipage}[t]{0.30\linewidth} \end{minipage}\\
+		\hline
+		\begin{minipage}[t]{0.60\linewidth}	DMI\_ACTION\_NON\_SLIPPERY\_TRACK\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 11 	\end{minipage}
+	&	\begin{minipage}[t]{0.30\linewidth} \end{minipage}\\
+		\hline
+		\begin{minipage}[t]{0.60\linewidth}	DMI\_ACTION\_NON\_LEADING\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 12 	\end{minipage}
+	&	\begin{minipage}[t]{0.30\linewidth} \end{minipage}\\
+		\hline
+		\begin{minipage}[t]{0.60\linewidth}	DMI\_ACTION\_NON\_LEADING\_EXIT\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 13 	\end{minipage}
+	&	\begin{minipage}[t]{0.30\linewidth} \end{minipage}\\
+		\hline
+		\begin{minipage}[t]{0.60\linewidth}	DMI\_ACTION\_OVERRIDE\_EOA\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 14 	\end{minipage}
+	&	\begin{minipage}[t]{0.30\linewidth} \end{minipage}\\
+		\hline
+		\begin{minipage}[t]{0.60\linewidth}	DMI\_ACTION\_OVERRIDE\_RS\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 15 	\end{minipage}
+	&	\begin{minipage}[t]{0.30\linewidth} \end{minipage}\\
+		\hline
+		\begin{minipage}[t]{0.60\linewidth}	DMI\_ACTION\_SHUNTING\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 16 	\end{minipage}
+	&	\begin{minipage}[t]{0.30\linewidth} \end{minipage}\\
+		\hline
+		\begin{minipage}[t]{0.60\linewidth}	DMI\_ACTION\_SHUNTING\_EXIT\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 17 	\end{minipage}
+	&	\begin{minipage}[t]{0.30\linewidth} \end{minipage}\\
+		\hline
+		\begin{minipage}[t]{0.60\linewidth}	DMI\_ACTION\_TAF\_ACK\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 18 	\end{minipage}
+	&	\begin{minipage}[t]{0.30\linewidth} \end{minipage}\\
+		\hline
+		\begin{minipage}[t]{0.60\linewidth}	DMI\_ACTION\_ACK\_ICON\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 19 	\end{minipage}
+	&	\begin{minipage}[t]{0.30\linewidth} \end{minipage}\\
+		\hline
+		\begin{minipage}[t]{0.60\linewidth}	DMI\_ACTION\_ACK\_TEXT\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 20 	\end{minipage}
+	&	\begin{minipage}[t]{0.30\linewidth} \end{minipage}\\
+	\hline
+		\begin{minipage}[t]{0.60\linewidth}	DMI\_ACTION\_ACK\_BRAKE\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 21 	\end{minipage}
+	&	\begin{minipage}[t]{0.30\linewidth} \end{minipage}\\
+		\hline
+\end{longtable}
+
+\newpage
+\begin{longtable}{|l|l|l|}
+	\caption{eMSG\_TYPE, type of data message transmitted to MMI}\\
+	\hline
+		\begin{minipage}[t]{0.60\linewidth} \textbf{Enum member}	\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} \textbf{Enum value}	\end{minipage} 
+	&	\begin{minipage}[t]{0.30\linewidth} \textbf{Comment} \end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.60\linewidth}	MSG\_BALISE\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 0 	\end{minipage}
+	&	\begin{minipage}[t]{0.30\linewidth} Balise message\end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.60\linewidth}	MSG\_LOOP\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 1 	\end{minipage}
+	&	\begin{minipage}[t]{0.30\linewidth} Loop message\end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.60\linewidth}	MSG\_RADIO\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 2 	\end{minipage}
+	&	\begin{minipage}[t]{0.30\linewidth} Radio message\end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.60\linewidth}	MSG\_MMI\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 3 	\end{minipage}
+	&	\begin{minipage}[t]{0.30\linewidth} DMI message\end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.60\linewidth}	MSG\_INFO2\end{minipage}
+	&	\begin{minipage}[t]{0.15\linewidth} 4 	\end{minipage}
+	&	\begin{minipage}[t]{0.30\linewidth} Informative message\end{minipage} \\
+	\hline
+\end{longtable}
+
+\subsection{Structures}
+\begin{longtable}{|l|l|l|}
+	\caption{SVarDataList, contains information about a track condition} \\ 
+	\hline
+		\begin{minipage}[t]{0.20\linewidth} \textbf{Member type}	\end{minipage}
+	&	\begin{minipage}[t]{0.20\linewidth} \textbf{Member name}	\end{minipage} 
+	&	\begin{minipage}[t]{0.65\linewidth} \textbf{Comment} \end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.20\linewidth} t\_distance	\end{minipage} 
+	&	\begin{minipage}[t]{0.20\linewidth} dStartLocation \end{minipage} 
+	&	\begin{minipage}[t]{0.65\linewidth} Start location of TC (m) \end{minipage}\\
+	\hline
+		\begin{minipage}[t]{0.20\linewidth} t\_distance	\end{minipage} 
+	&	\begin{minipage}[t]{0.20\linewidth} dEndLocation \end{minipage} 
+	&	\begin{minipage}[t]{0.65\linewidth} End location of TC (m) \end{minipage}\\
+	\hline
+		\begin{minipage}[t]{0.20\linewidth} eTCInfo	\end{minipage} 
+	&	\begin{minipage}[t]{0.20\linewidth} TCInfo \end{minipage} 
+	&	\begin{minipage}[t]{0.65\linewidth} Type of track condition \end{minipage}\\
+	\hline
+		\begin{minipage}[t]{0.20\linewidth} SVarDataList \end{minipage} 
+	&	\begin{minipage}[t]{0.20\linewidth} VarList \end{minipage} 
+	&	\begin{minipage}[t]{0.65\linewidth} Data associated to the track condition \end{minipage}\\
+	\hline
+\end{longtable}
+
+\begin{longtable}{|l|l|l|}
+	\caption{SVarData, contains variable and its value (used to indicate driver data entry on DMI)} \\ 
+	\hline
+		\begin{minipage}[t]{0.20\linewidth} \textbf{Member type}	\end{minipage}
+	&	\begin{minipage}[t]{0.20\linewidth} \textbf{Member name}	\end{minipage} 
+	&	\begin{minipage}[t]{0.65\linewidth} \textbf{Comment} \end{minipage} \\
+	\hline
+		\begin{minipage}[t]{0.20\linewidth} string \end{minipage} 
+	&	\begin{minipage}[t]{0.20\linewidth} VarName \end{minipage} 
+	&	\begin{minipage}[t]{0.65\linewidth} Name of data \end{minipage}\\
+	\hline
+		\begin{minipage}[t]{0.20\linewidth} string \end{minipage} 
+	&	\begin{minipage}[t]{0.20\linewidth} VarValue \end{minipage} 
+	&	\begin{minipage}[t]{0.65\linewidth} Value of data \end{minipage}\\
+	\hline
+\end{longtable}
+
+%===================================================
+%Do NOT change anything below this line
+
+\end{document}
