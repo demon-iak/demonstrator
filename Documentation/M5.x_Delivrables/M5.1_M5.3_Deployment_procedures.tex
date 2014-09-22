@@ -89,6 +89,7 @@ Version & Section & Modification / Description & Author \\\hline}
 \begin{supertabular}{| m{1.2cm} | m{1.2cm} | m{6.6cm} | m{4cm} |}
  1.0.0&All Parts &New Document &Alexis Julin \\\hline
  1.0.1&New Part &Add license management &Alexis Julin \\\hline
+ 1.0.2&New Part &Add GE comments (issue nr.12) &Nicolas Van Landeghem \\\hline
 \end{supertabular}
 
 
@@ -106,24 +107,24 @@ Version & Section & Modification / Description & Author \\\hline}
 
 %Start here
 \section{Introduction}
-This document is a guide for the installation and execution of the EVC simulator software libraries used by
-the Automatic Test Runner (ATR).
+This document is a guide for the installation and execution of the EVC simulator software libraries used by the Automatic Test Runner (ATR) aka Preliminary Test Environement.
 \newline
 \newline
-EVC simulator software libraries is T5.2 delivrable (M5.1)
+EVC simulator software libraries is T5.2 deliverable (M5.1)
 \newline
 \newline
-Automatic Test Runner (ATR) is T5.3 delivrable (M5.3)
+Automatic Test Runner (ATR) is T5.3 deliverable (M5.3)
 \newpage
 \section{Installation}
 \subsection{Hardware and Software requirements}
-OpenETCS step l delivrable has been installed and tested on a computer
+OpenETCS step l deliverable has been installed and tested on a computer
 running CentOS 6.5 operating system with the following mandatory conditions :
 \begin{itemize}
 	\item internet connection
 	\item root access
 \end{itemize}
-Due to compatibily between Red Hat Enterprise versions and CentOS, installation works as well on Red Hat Enterprise Linux 6.  
+Due to compatibility between Red Hat Enterprise versions and CentOS, installation works as well on Red Hat Enterprise Linux 6.
+Step 1 deliverable is composed of M5.1 EVC kernel library which can be used through M5.3 Test environment executable. In a first step, the EVC kernel is not ready to host any external code, whereas the Test environment is provided for local use with some scenarios given as example.
 \subsection{Installation}
 \subsubsection{First steps}
 \begin{itemize}
@@ -137,6 +138,8 @@ Due to compatibily between Red Hat Enterprise versions and CentOS, installation 
 \newline	
 \verb|>cd WP5_Demonstrator_Installer |	
 	\item Connect as root
+\newline	
+\newline NB: an archive is a compressed set of files provided by the project and/or the provider and that an end-user can uncompress or unpack onto its own computer.
 \end{itemize}
 \subsubsection{Mysql dependencies}
 \begin{itemize}
@@ -196,15 +199,15 @@ Due to compatibily between Red Hat Enterprise versions and CentOS, installation 
 \newpage
 \section{Content of the package}
 \subsection{OpenETCS archive}
-OpenETCS archive contains :
+A rpm (Redhat Packet Manager) is a OS-dedicated packet manager, used to create  automation when automatic deployment is required. It avoid end-users to have knowledge of which files have to be installed where on the Operating System. OpenETCS archive contains :
 \begin{itemize}
 	\item OpenETCS rpm
 	\item SRS 230d database rpm
 	\item SRS 330 v11 database rpm
 	\item SRS 330 v20 database rpm
-\end{itemize}	
+\end{itemize}
 \subsection{Installation directory}
-After installation procedure completed, following files and folders can be found in \textbf{/usr/local/openETCS} folder.
+After installation procedure has been completed, following files and folders can be found in \textbf{/usr/local/openETCS} folder.
 \subsubsection{Licensing folder}
 Licensing folder contains all tools to manage license.
 \subsubsection{lib folder}
