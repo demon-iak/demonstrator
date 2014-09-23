@@ -97,6 +97,7 @@ Version & Section & Modification / Description & Author \\\hline}
 2.8 &All parts&Add EXPECTED\_TO\_FAIL command &Didier Weckmann \\\hline
 2.9 &All parts&Add WAIT\_BUTTON ACK\_XXX &Didier Weckmann \\\hline
 2.10 &All parts&Add EVC\_CONFIG, NV\_FROM\_HEX\_BUFFER and COUNTRIES\_ID &Alexis Julin \\\hline
+2.11 &All parts&Reply to GE comments &Didier Weckmann \\\hline
 \end{supertabular}
 
 
@@ -121,7 +122,9 @@ This document explains how to use the Automatic Test Runner.
 
 The purpose of the Automatic Test Runner is to provide a tool that allows the automatic tests of the on-board simulator with a set of scenarios during developments in order to validate the changes and perform non regression tests.
 
-The tester is a graphical application integrating an on-board and a simplified DMI. It can simulate balises, radio, loops, odometer and driver interfaces. It can test the internal state of on-board in order to check its correct behaviour according to an input scenario.
+The tester is a graphical application integrating an on-board and a simplified DMI. It can simulate all interfaces to the EVC (e.g. balises, radio, loops, odometer, TIU and driver interfaces). It can test the internal state of on-board in order to check its correct behaviour according to an input scenario.
+
+In a first step, this document only concerns the simulated demonstrator. Indeed, the physical demonstrator will be available in a second step. Thus, the document will be updated accordingly.
 
 \section{How to create scenarios}
 \subsection{Introduction}
@@ -138,9 +141,11 @@ The scenario describes how the Automatic Test Runner has to stimulate the interf
 	\item Radio: by simulating radio communication from RBC/RIU to on-board.
 \end{itemize}
 
-According to the described interactions, a defined behaviour of the on-board is awaited and test conditions can be described in the scenario in order to test the internal state of the on-board and validate the awaited behaviour. 
+According to the described interactions, a defined behaviour of the on-board is awaited and test conditions can be described in the scenario in order to test the internal state of the on-board and validate the awaited behaviour. These test conditions are defined later in the document and have different trigger: waiting a preset time, waiting a preset location, waiting a predefined output, ... 
 
 Note: The file extension for scenario files is ‘.sce’.
+\newline
+Note 2: The STM module is out of the openETCS project scope and will not be handled within this document.
 
 \subsection{Scenario file description}
 
@@ -154,13 +159,16 @@ Here is the list of the different section names:
 	\item[BaliseTrackside:] Description of balise contents to be sent to on-board.
 	\item[LoopTrackside:] Description of loop messages to be sent to on-board.
 	\item[Config\_SRSNationalDefaults:] Description of the default national values used by on-board.
-	\item[Config\_FixedData:] Description of the fixed data values used by on-board.
 	\item[Config\_EVCInit:] Description of starting conditions used by on-board.
 	\item[Config\_TrainData:] Description of train data used by on-board. 
 	\item[Config\_RBCData1:] Description of the first RBC parameters used for testing. 
 	\item[Config\_RBCData2:] Description of the second RBC parameters used for testing. 
 	\item[Config\_Scenario:] Specific options for the testrunner about the current scenario.
 \end{description}
+
+FixedData refer to SRS section A3.1. To improve the EVC testability, it is also possible to specify other values, e.g. SAFECONNECTION\_TIMEOUT or MAX\_RECONNECTION\_TIME can be shorten.
+
+For data defined within SRS packets, these have to be set using the dedicated SRS message (e.g. gradient profile is defined within packet 21).
 
 The user can also define its own sections for balise, loop and radio message contents and radio execution thread.
 
@@ -1652,7 +1660,7 @@ This section is composed of a succession of commands. These commands can request
 	\end{tabular}
 
 \subsubsection{Default national values configuration section: Config\_SRSNationalDefaults}
-	This section defines the default national values used by EVC.
+	This section defines the default national values used by EVC, before Start-of-Mission. These default national values can be overridden when the train receives a packet 3 from trackside. This will allow the Test Environment to be able to test the correct update of the national values data.
 	
 	\begin{itemize}
 		\item COUNTRY\_ID:
@@ -2248,7 +2256,7 @@ This section is composed of a succession of commands. These commands can request
 	\end{itemize}
 	
 \subsubsection{EVC configuration section: Config\_EVCInit}
-
+This section allow definition of values of the EVC at power on, i.e. at initialization state.
 	\begin{itemize}
 		\item LINE\_LEVEL:
 		
@@ -2519,6 +2527,7 @@ This section is composed of a succession of commands. These commands can request
 	\end{itemize}
 	
 \subsubsection{Train data configuration section : Config\_TrainData}
+This section defines a default train data set but also allows test automation by simulating user actions (e.g. from DMI).
 	\begin{itemize}
 		\item BALISE\_COM\_AVAILABLE:
 		
@@ -2527,7 +2536,7 @@ This section is composed of a succession of commands. These commands can request
 				\hline
 				
 					\begin{minipage}[t]{0.22\linewidth} \textbf{Description}	\end{minipage} 
-				&	\begin{minipage}[t]{0.78\linewidth} Indicates if balise communication is available onboard. \end{minipage} \\
+				&	\begin{minipage}[t]{0.78\linewidth} Indicates if balise communication is available on-board. \end{minipage} \\
 				
 				\hline
 																																									
@@ -3134,7 +3143,7 @@ This section is composed of a succession of commands. These commands can request
 			\end{longtable}				
 	\end{itemize}
 \section{How to run the Automatic Test Runner}
-First of all, to run the Automatic Test Runner, a terminal has to be opened and the current directory changed to the Automatic Test Runner working directory:
+First of all, to run the Automatic Test Runner (preliminary Test Environment), a terminal has to be opened and the current directory changed to the Automatic Test Runner working directory:
 \newline
 \fcolorbox{gray}{gray}{\begin{minipage}{\textwidth}
 	>cd /usr/local/openETCS/test\_runner
