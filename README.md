@@ -29,6 +29,7 @@ Option 2
 - [CTS timetables](http://opendata.cts-strasbourg.fr/fiches-horaires/lignes/Hiver%202014_2015/Navette_Entzheim_hiver2014_4v.pdf)
 
 Option 3
+
 A taxi will charge you for 16 km and 20 minutes, without traffic jam !
 
 Aim:
