@@ -24,3 +24,6 @@ Prerequisite:
 - PC with VMWare Player installed
 - optionally ability to access to the internet through Wifi
 - C language knowledge
+-------------------------------------
+
+Thanks to all participants for their participations. Mom is available [here](https://github.com/openETCS/demonstrator/blob/master/Documentation/Meeting/Strasbourg - 07_8 Oct 2014/2014_Oct_7_8_TWS.pdf)
