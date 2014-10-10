@@ -26,4 +26,4 @@ Prerequisite:
 - C language knowledge
 
 -------------------------------------
-Thanks to all participants for their participations. Mom is available [here](https://github.com/openETCS/demonstrator/blob/master/Documentation/Meeting/Strasbourg - 7_8 Oct 2014/2014_Oct_7_8_TWS.pdf).
+Thanks to all participants for their participations. Slideshow is available [here](https://github.com/openETCS/demonstrator/blob/master/Documentation/Meeting/Strasbourg - 7_8 Oct 2014/2014_Oct_7_8_TWS.pdf).
