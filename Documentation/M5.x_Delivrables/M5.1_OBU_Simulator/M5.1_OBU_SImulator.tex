@@ -108,14 +108,14 @@ The European Vital Computer (EVC) is the brain or kernel of the ERTMS/ETCS syste
   \label{fig:Overview of ETCS Onboard}
 \end{figure}
 \begin{itemize}
-\item MMI : this interface is in fact the DMI product, which has a non standardized interface to the EVC;
-\item	TIU : this interface defined at FIS level allows the communication with the train;
-\item	BTM : this interface defined at FFFIS level reads the balise telegrams;
-\item	LTM : this interface defined at FFFIS level reads the loop telegrams;
-\item	Euroradio (RIM) : this interface defined at FFFIS level allows the communication by radio;
-\item	Odometry : this module calculates the travelled distance, train speed and accelerations;
-\item	JRU : this module records all events occurring in the train; the extraction of data is defined at FFFIS level;
-\item	STM : this module exists in theory in two versions: national or European; it converts as far as possible national information into ETCS information, including braking the train, when appropriate. It is optional in openETCS' scope.
+\item MMI: this interface is in fact the DMI product, which has a non standardized interface to the EVC;
+\item	TIU: this interface defined at FIS level allows the communication with the train;
+\item	BTM: this interface defined at FFFIS level reads the balise telegrams;
+\item	LTM: this interface defined at FFFIS level reads the loop telegrams;
+\item	Euroradio (RIM): this interface defined at FFFIS level allows the communication by radio;
+\item	Odometry: this module calculates the travelled distance, train speed and accelerations;
+\item	JRU: this module records all events occurring in the train; the extraction of data is defined at FFFIS level;
+\item	STM: this module exists in theory in two versions: national or European; it converts as far as possible national information into ETCS information, including braking the train, when appropriate. It is optional in openETCS' scope.
 \end{itemize}
 \section{Limitations}
 The mode STM European is not supported.
@@ -151,9 +151,9 @@ The EuroRadio manages the interface with the radio network. It manages the conne
 \subsection{Odometer}
 The Odometer transmits to the EVC simulator the train location data (position, speed, acceleration). The odometric data are described in Appendix B (page \pageref{odometric_data})
 \subsection{TIU}
-The TIU manages the interface between the EVC simulator and the train equipment. It receives some commands from the EVC simulator (service brake application, emergency brake application,...) and transmits some status (main power switch, cabin open, service brake applied,...). The TIU data are described in  Appendix C (page \pageref{tiu_data})
+The TIU manages the interface between the EVC simulator and the train equipment. It receives some commands from the EVC simulator (service brake application, emergency brake application, ...) and transmits some status (main power switch, cabin open, service brake applied, ...). The TIU data are described in  Appendix C (page \pageref{tiu_data})
 \subsection{DMI}
-The DMI manages the interface with the driver. It receives from the EVC simulator the information to displayed to the driver (train speed, permitted speed, track description,...) and it transmits the driver action (train data entry, shunting request,...).
+The DMI manages the interface with the driver. It receives from the EVC simulator the information to displayed to the driver (train speed, permitted speed, track description, ...) and it transmits the driver action (train data entry, shunting request, ...).
 The data are exchanged according to specification for EVC-DMI communication (see /6/).
 The DMI interface is according to /6/.
 \subsection{GUI/Diagnostic}
@@ -252,14 +252,14 @@ There is one additional module: the EVC simulator controller. It performs the fo
 The Train interface manager performs the following tasks:
 \begin{itemize}
 \item	It receives and processes the odometric data to update the internal location data.
-\item		It updates the EVC commands on the TIU.
-\item		It gets the train statuses from the TIU.
+\item	It updates the EVC commands on the TIU.
+\item	It gets the train statuses from the TIU.
 \end{itemize}
 \section{Exchanged data}
 This part provides a list of the main exchanged data. 
 \subsection{Input data}
 			\begin{longtable}{|l|l|}
-				\caption{Train interface manager : Input data}\\ 
+				\caption{Train interface manager: Input data}\\ 
 				\hline
 				
 					\begin{minipage}[t]{0.35\linewidth} \textbf{Source}	\end{minipage} 
@@ -320,7 +320,7 @@ This part provides a list of the main exchanged data.
 			\end{longtable}	
 \subsection{Output data}
 			\begin{longtable}{|l|l|}
-				\caption{Train interface manager : Output data}\\ 
+				\caption{Train interface manager: Output data}\\ 
 				\hline
 				
 					\begin{minipage}[t]{0.35\linewidth} \textbf{Destination}	\end{minipage} 
@@ -375,7 +375,7 @@ It initialises the communication with the Odometer.
 It initialises the communication with the TIU.
 \subsection{Manage odometric data}
 It gets the odometric data (position, speed, acceleration) of the train.
-It calculates the internal train location data (train front location, train rear location,...) :
+It calculates the internal train location data (train front location, train rear location, ...):
 \begin{itemize}
 	\item It converts the location data in train coordinate according to the active cabin: the distance increment direction is the train orientation defined by the active cabin.
 	\item It calculates the location error according to the error model.
@@ -394,12 +394,12 @@ The Balise/loop interface manager performs the following tasks:
 \item It receives and decodes the balise and loop message.
 \item It manages the balise groups.
 \item It manages the balise linking.
-\item It manages the track condition about big metal masses
+\item It manages the track condition about big metal masses.
 \end{itemize}
 \section{Exchanged data}
 \subsection{Input data}
 			\begin{longtable}{|l|l|}
-				\caption{Balise/loop interface manager : Input data}\\ 
+				\caption{Balise/loop interface manager: Input data}\\ 
 				\hline
 				
 					\begin{minipage}[t]{0.35\linewidth} \textbf{Source}	\end{minipage} 
@@ -450,7 +450,7 @@ The Balise/loop interface manager performs the following tasks:
 			\end{longtable}	
 \subsection{Output data}
 			\begin{longtable}{|l|l|}
-				\caption{Balise/loop interface manager : Output data}\\ 
+				\caption{Balise/loop interface manager: Output data}\\ 
 				\hline
 				
 					\begin{minipage}[t]{0.35\linewidth} \textbf{Destination}	\end{minipage} 
@@ -568,12 +568,12 @@ The DMI interface manager performs the following tasks:
 \item It manages the communication with the DMI.
 \item It sends relevant data for display.
 \item It manages the train data entry.
-\item It gets the driver request
+\item It gets the driver request.
 \end{itemize}
 \section{Exchanged data}
 \subsection{Input data}
 			\begin{longtable}{|l|l|}
-				\caption{DMI interface manager : Input data}\\ 
+				\caption{DMI interface manager: Input data}\\ 
 				\hline
 				
 					\begin{minipage}[t]{0.35\linewidth} \textbf{Source}	\end{minipage} 
@@ -640,7 +640,7 @@ The DMI interface manager performs the following tasks:
 			\end{longtable}	
 \subsection{Output data}
 			\begin{longtable}{|l|l|}
-				\caption{DMI interface manager : Output data}\\ 
+				\caption{DMI interface manager: Output data}\\ 
 				\hline
 				
 					\begin{minipage}[t]{0.35\linewidth} \textbf{Destination}	\end{minipage} 
@@ -670,7 +670,7 @@ The DMI interface manager performs the following tasks:
 					\begin{minipage}[t]{0.35\linewidth} Mode/level manager	\end{minipage} 
 				&	\begin{minipage}[t]{0.65\linewidth}
 						\begin{itemize}
-							\item Driver request (Start, shunting, non leading, override,...)
+							\item Driver request (start, shunting, non leading, override, ...)
 							\item Data entry (driver id, level, train data, ...)
 						\end{itemize}			
 					\end{minipage} \\
@@ -721,7 +721,7 @@ The following functions are performed by the DMI interface manager:
 \subsection{Initialize the external communication}
 It initialises the communication with the DMI.
 \subsection{Send periodical data to DMI}
-It builds and sends a message containing some data to be updated periodically on DMI: train location, train speed, supervised speed, status of brakes, ETCS mode \& level,...
+It builds and sends a message containing some data to be updated periodically on DMI: train location, train speed, supervised speed, status of brakes, ETCS mode \& level, ...
 \subsection{Manage text message}
 It manages the conditions to display or remove a text message on the DMI from a list of text message.
 \subsection{Manage TAF}
@@ -731,18 +731,18 @@ It manages the display, the remove of the track ahead free request. It processes
 It receives and processes the following data from the others modules:
 \begin{itemize}
 \item New text message to display: it adds the text message in the current list of text message to manage.
-\item New track description: it builds and sends a message containing the track description (static speed profile, gradient profile, track condition,...) to the DMI.
+\item New track description: it builds and sends a message containing the track description (static speed profile, gradient profile, track condition, ...) to the DMI.
 \item Operator request via GUI: it manages the operation request performed on the GUI as it was a driver action performed on the DMI.
 \end{itemize}
 
 \subsection{Manage available option}
-According to the On-board status, it builds and sends a message to the DMI containing the available option (entry of level, selection of shunting request,...).
+According to the On-board status, it builds and sends a message to the DMI containing the available option (entry of level, selection of shunting request, ...).
 
 \subsection{Manage data from DMI}
 It receives, decodes and processes the messages from the DMI:
 \begin{itemize}
-\item It manages the data entry (driver id, ETCS level, train data,...) and informs the other modules.
-\item It gets the driver request (Shunting request, Start of Mission request,...) and transmits them to the suitable module.
+\item It manages the data entry (driver id, ETCS level, train data, ...) and informs the other modules.
+\item It gets the driver request (Shunting request, Start of Mission request, ...) and transmits them to the suitable module.
 \item It manages the text message acknowledgements.
 \end{itemize}
 
@@ -762,7 +762,7 @@ The Radio interface manager performs the following tasks:
 \section{Exchanged data}
 \subsection{Input data}
 			\begin{longtable}{|l|l|}
-				\caption{Radio interface manager : Input data}\\ 
+				\caption{Radio interface manager: Input data}\\ 
 				\hline
 				
 					\begin{minipage}[t]{0.35\linewidth} \textbf{Source}	\end{minipage} 
@@ -826,7 +826,7 @@ The Radio interface manager performs the following tasks:
 			\end{longtable}	
 \subsection{Output data}
 			\begin{longtable}{|l|l|}
-				\caption{Radio interface manager : Output data}\\ 
+				\caption{Radio interface manager: Output data}\\ 
 				\hline
 				
 					\begin{minipage}[t]{0.35\linewidth} \textbf{Destination}	\end{minipage} 
@@ -844,7 +844,7 @@ The Radio interface manager performs the following tasks:
 				
 				\hline
 				
-					\begin{minipage}[t]{0.35\linewidth} Mode /level manager	\end{minipage} 
+					\begin{minipage}[t]{0.35\linewidth} Mode/level manager	\end{minipage} 
 				&	\begin{minipage}[t]{0.65\linewidth}
 						\begin{itemize}
 							\item Radio communication session open/closed
@@ -914,7 +914,7 @@ It receives and processes the following data from the others modules:
 According to the national values, it checks the maximum time since the last received radio message when a radio communication session is established and it applies the required reaction. It manages the radio holes.
 
 \subsection{Manage RBC transition}
-It manages the RBC transition according to the available radio equipment (one or two equipment available).
+It manages the RBC transition according to the available radio equipment (one or two equipments available).
 
 \chapter{EuroRadio interface manager}
 \section{Overview}
@@ -927,7 +927,7 @@ The EuroRadio interface manager performs the following tasks:
 \section{Exchanged data}
 \subsection{Input data}
 			\begin{longtable}{|l|l|}
-				\caption{EuroRadio interface manager : Input data}\\ 
+				\caption{EuroRadio interface manager: Input data}\\ 
 				\hline
 				
 					\begin{minipage}[t]{0.35\linewidth} \textbf{Source}	\end{minipage} 
@@ -938,7 +938,7 @@ The EuroRadio interface manager performs the following tasks:
 					\begin{minipage}[t]{0.35\linewidth} EuroRadio	\end{minipage} 
 				&	\begin{minipage}[t]{0.65\linewidth}
 						\begin{itemize}
-							\item Connection / disconnection indication
+							\item Connection/disconnection indication
 							\item Reception of radio message
 						\end{itemize}
 					\end{minipage} \\
@@ -948,7 +948,7 @@ The EuroRadio interface manager performs the following tasks:
 					\begin{minipage}[t]{0.35\linewidth} Radio interface manager	\end{minipage} 
 				&	\begin{minipage}[t]{0.65\linewidth}
 						\begin{itemize}
-							\item Connection /.disconnection request
+							\item Connection/disconnection request
 							\item Request to send a radio message
 						\end{itemize}			
 					\end{minipage} \\
@@ -957,7 +957,7 @@ The EuroRadio interface manager performs the following tasks:
 			\end{longtable}	
 \subsection{Output data}
 			\begin{longtable}{|l|l|}
-				\caption{EuroRadio interface manager : Output data}\\ 
+				\caption{EuroRadio interface manager: Output data}\\ 
 				\hline
 				
 					\begin{minipage}[t]{0.35\linewidth} \textbf{Destination}	\end{minipage} 
@@ -1008,11 +1008,11 @@ It initialises the communication with the EuroRadio.
 \subsection{Manage data from internal module}
 It receives and processes the following data from the others modules:
 \begin{itemize}
-\item Connection / disconnection request: it builds and sends the message for the connection / disconnection request to the EuroRadio.
+\item Connection/disconnection request: it builds and sends the message for the connection/disconnection request to the EuroRadio.
 \item Data send request: it builds and sends the message for the data send request to the EuroRadio.
 \end{itemize}
 \subsection{Manage EuroRadio message}
-It receives and decodes the messages from the EuroRadio, it manages the radio connection and it informs the Radio interface manager of the connection / disconnection and reception of radio message.
+It receives and decodes the messages from the EuroRadio, it manages the radio connection and it informs the Radio interface manager of the connection/disconnection and reception of radio message.
 \subsection{Close the external communication}
 It closes the communication with the EuroRadio.
 
@@ -1026,7 +1026,7 @@ The Recorder interface manager performs the following tasks:
 \section{Exchanged data}
 \subsection{Input data}
 			\begin{longtable}{|l|l|}
-				\caption{Recorder interface manager : Input data}\\ 
+				\caption{Recorder interface manager: Input data}\\ 
 				\hline
 				
 					\begin{minipage}[t]{0.35\linewidth} \textbf{Source}	\end{minipage} 
@@ -1055,7 +1055,7 @@ The Recorder interface manager performs the following tasks:
 			\end{longtable}	
 \subsection{Output data}
 			\begin{longtable}{|l|l|}
-				\caption{Recorder interface manager : Output data}\\ 
+				\caption{Recorder interface manager: Output data}\\ 
 				\hline
 				
 					\begin{minipage}[t]{0.35\linewidth} \textbf{Destination}	\end{minipage} 
@@ -1086,7 +1086,7 @@ It initialises the communication with the JRU.
 \subsection{Manage data from internal module}
 It receives the juridical event to record: it builds and sends the corresponding message to the JRU.
 \subsection{Record changes}
-It builds and sends message to the JRU for the record of periodical data (train location , speed,...) or when a juridical data changes (ETCS mode, level,...)
+It builds and sends message to the JRU for the record of periodical data (train location , speed, ...) or when a juridical data changes (ETCS mode, level, ...)
 \subsection{Close the external communication}
 It closes the communication with the JRU.
 \chapter{Data manager}
@@ -1095,7 +1095,7 @@ The Data manager performs the following tasks:
 \begin{itemize}
 \item	It manages the received data from trackside: apply filter according to the ETCS mode/level and current level transition, dispatch data to the other modules.
 \item	It manages the track condition.
-\item It manages the national data.
+\item	It manages the national data.
 \item	It manages the route suitability data.
 \item	It manages the emergency stop.
 \end{itemize}
@@ -1103,7 +1103,7 @@ The Data manager performs the following tasks:
 \section{Exchanged data}
 \subsection{Input data}
 			\begin{longtable}{|l|l|}
-				\caption{Data manager : Input data}\\ 
+				\caption{Data manager: Input data}\\ 
 				\hline
 				
 					\begin{minipage}[t]{0.35\linewidth} \textbf{Source}	\end{minipage} 
@@ -1175,7 +1175,7 @@ The Data manager performs the following tasks:
 			\end{longtable}	
 \subsection{Output data}
 			\begin{longtable}{|l|l|}
-				\caption{Data manager : Output data}\\ 
+				\caption{Data manager: Output data}\\ 
 				\hline
 				
 					\begin{minipage}[t]{0.35\linewidth} \textbf{Destination}	\end{minipage} 
@@ -1227,7 +1227,7 @@ The Data manager performs the following tasks:
 				&	\begin{minipage}[t]{0.65\linewidth}
 						\begin{itemize}
 							\item Level transition data
-							\item RBC answer (ack of train data, Shunting accepted/rejected,...)
+							\item RBC answer (ack of train data, Shunting accepted/rejected, ...)
 							\item Mode profile
 							\item Train trip request
 							\item Reversing area data
@@ -1310,7 +1310,7 @@ It manages the data stored in buffer during the level transition when the train 
 It manages the national data, it checks when the new national data becomes valid, it checks the validity of the current national data, it sets the default national data.
 
 \subsection{Manage track conditions}
-It manages the list of the track condition and checks when the train enters /exits in a track condition area. It sets the TIU output required by the active track condition (switch off eddy current brakes,...).
+It manages the list of the track condition and checks when the train enters /exits in a track condition area. It sets the TIU output required by the active track condition (switch off eddy current brakes, ...).
 
 \subsection{Manage route suitability}
 It manages the list of route suitability, it detects if there is an unsuitability according to the train data, it requests the reduction of the MA to the next unsuitability, it manages the override of the unsuitability.
@@ -1334,7 +1334,7 @@ The Movement limitation computer performs the following tasks:
 \section{Exchanged data}
 \subsection{Input data}
 			\begin{longtable}{|l|l|}
-				\caption{Movement limitation computer : Input data}\\ 
+				\caption{Movement limitation computer: Input data}\\ 
 				\hline
 				
 					\begin{minipage}[t]{0.35\linewidth} \textbf{Source}	\end{minipage} 
@@ -1376,7 +1376,7 @@ The Movement limitation computer performs the following tasks:
 							\item Route unsuitability data
 							\item Indication of new national data
 							\item Repositioning information
-							\item Track description (gradient, speed profile,...)
+							\item Track description (gradient, speed profile, ...)
 							\item Mode profile
 							\item Reversing supervision data
 							\item Temporary speed restriction
@@ -1413,7 +1413,7 @@ The Movement limitation computer performs the following tasks:
 			\end{longtable}	
 \subsection{Output data}
 			\begin{longtable}{|l|l|}
-				\caption{Movement limitation computer : Output data}\\ 
+				\caption{Movement limitation computer: Output data}\\ 
 				\hline
 				
 					\begin{minipage}[t]{0.35\linewidth} \textbf{Destination}	\end{minipage} 
@@ -1478,7 +1478,7 @@ The following functions are performed by the Movement limitation computer:
 \subsection{Manage data from internal module}
 It manages the reception of data from other modules:
 \begin{itemize}
-\item Track description data (static speed profile, gradient profile, temporary speed restriction, axle load speed profile,...). It is stored and used for the calculation of the supervision data.
+\item Track description data (static speed profile, gradient profile, temporary speed restriction, axle load speed profile, ...). It is stored and used for the calculation of the supervision data.
 \item MA data, SR data, reversing supervision data: it is stored and used for the calculation of the supervision data.
 \item Reduction due to route unsuitability: it stored and used to reduce the current MA to the location of the route unsuitability.
 \item Mode profile: it is stored and used for the calculation of the supervision data.
@@ -1495,7 +1495,7 @@ It manages the timers associated to the current MA.
 It manages the start and the stop of the timers. If there is a timer expiration, it requests the calculation of supervision curves for the modified MA data.
 
 \subsection{Update movement authorization}
-It requests the calculation of the suitable supervision data according to the current ETCS mode. The new calculation can be due to a mode change, the use of new national data or the modification of the input data (staff responsible speed / distance, reversing supervision data, MA, track description,...).
+It requests the calculation of the suitable supervision data according to the current ETCS mode. The new calculation can be due to a mode change, the use of new national data or the modification of the input data (staff responsible speed/distance, reversing supervision data, MA, track description, ...).
 
 \subsection{Manage track description}
 It manages the deletion of a part or the whole track description data according to the change of the stop location and the ETCS mode.
@@ -1505,13 +1505,13 @@ It manages the deletion of a part or the whole track description data according 
 The Train movement controller performs the following tasks:
 \begin{itemize}
 \item	It manages the supervision of the train movement according to the ETCS mode and the available supervision data.
-\item	It manages the service brakes and emergency brakes application requests.
+\item	It manages the service brake and emergency brake application requests.
 \item	It supervises an area according to a list of balise group (in shunting or staff responsible mode).
 \end{itemize}
 \section{Exchanged data}
 \subsection{Input data}
 			\begin{longtable}{|l|l|}
-				\caption{Train movement controller : Input data}\\ 
+				\caption{Train movement controller: Input data}\\ 
 				\hline
 				
 					\begin{minipage}[t]{0.35\linewidth} \textbf{Source}	\end{minipage} 
@@ -1590,7 +1590,7 @@ The Train movement controller performs the following tasks:
 			\end{longtable}	
 \subsection{Output data}
 			\begin{longtable}{|l|l|}
-				\caption{Train movement controller : Output data}\\ 
+				\caption{Train movement controller: Output data}\\ 
 				\hline
 				
 					\begin{minipage}[t]{0.35\linewidth} \textbf{Destination}	\end{minipage} 
@@ -1641,7 +1641,7 @@ The following functions are performed by the Train movement controller:
 \subsection{Manage data from internal module}
 It manages the reception of data from other modules:
 \begin{itemize}
-\item Service brakes / emergency brakes application /release request from another module: it stores the request.
+\item Service brakes/emergency brakes application/release request from another module: it stores the request.
 \item Shunting area data: it stores the list of balise group composing the area.
 \item Staff responsible area data: it stores the list of balise group composing the area.
 \item Indication of a new balise group: if the current ETCS mode is shunting or staff responsible, it checks if the passed balise group belong to the authorised area.
@@ -1708,7 +1708,7 @@ The Mode/level manager performs the following tasks:
 				&	\begin{minipage}[t]{0.65\linewidth}
 						\begin{itemize}
 							\item Level transition data
-							\item RBC answer (ack of train data, Shunting accepted/rejected,...)
+							\item RBC answer (ack of train data, shunting accepted/rejected, ...)
 							\item Mode profile
 							\item Train trip request
 							\item Reversing area data
@@ -1720,8 +1720,8 @@ The Mode/level manager performs the following tasks:
 					\begin{minipage}[t]{0.35\linewidth} DMI interface manager	\end{minipage} 
 				&	\begin{minipage}[t]{0.65\linewidth}
 						\begin{itemize}
-							\item Driver request (shunting, start of mission, entry of level,...)
-							\item Data entry (driver id, level, train data,...)
+							\item Driver request (shunting, start of mission, entry of level, ...)
+							\item Data entry (driver id, level, train data, ...)
 						\end{itemize}			
 					\end{minipage} \\
 				
@@ -1775,7 +1775,7 @@ The Mode/level manager performs the following tasks:
 			\end{longtable}	
 \subsection{Output data}
 			\begin{longtable}{|l|l|}
-				\caption{Mode/level manager : Output data}\\ 
+				\caption{Mode/level manager: Output data}\\ 
 				\hline
 				
 					\begin{minipage}[t]{0.35\linewidth} \textbf{Destination}	\end{minipage} 
@@ -1787,7 +1787,7 @@ The Mode/level manager performs the following tasks:
 				&	\begin{minipage}[t]{0.65\linewidth}
 						\begin{itemize}
 							\item Request to send a radio message
-							\item RBC connection /.disconnection request
+							\item RBC connection/disconnection request
 						\end{itemize}
 					\end{minipage} \\
 				
@@ -1827,7 +1827,7 @@ The Mode/level manager performs the following tasks:
 							\item On-board status data
 							\item Train data status
 							\item Reversing area indication
-							\item Deadman isolation request (TIU data)
+							\item Dead man isolation request (TIU data)
 						\end{itemize}				
 					\end{minipage} \\
 				
@@ -1849,11 +1849,11 @@ It manages the reception of data from other modules:
 \item Level transition data: it is stored for the management of the level transition.
 \item Reversing area data: it is stored for the management of the reversing area.
 \item Driver acknowledgement, action: it is used in the management of the on-board status.
-\item Internal event (RBC answer, train trip request,...): it is used in the management of the on-board status.
+\item Internal event (RBC answer, train trip request, ...): it is used in the management of the on-board status.
 \end{itemize}
 
 \subsection{Manage on-board status}
-It manages the status of the on-board according to the current ETCS level, the received event (driver action, RBC answer,...), the TIU data (power on/off, cabin status,...). 
+It manages the status of the on-board according to the current ETCS level, the received event (driver action, RBC answer, ...), the TIU data (power on/off, cabin status, ...). 
 It sets the ETCS mode. 
 It manages the required actions in the current status.
 
@@ -1862,12 +1862,12 @@ It manages the status of the train data according to the mode changes and the dr
 
 \subsection{Manage mode profile}
 It manages the entry / exit in shunting or on sight according to the stored mode profile. 
-It manages the acknowledgment request to the driver.
+It manages the acknowledgement request to the driver.
 
 \subsection{Manage level transition}
 According to the stored level transition data and the available train equipments, it selects the suitable level transition. 
 It performs the level transition at the required location and sets the new level. 
-It manages the acknowledgment request to the driver for the level transition. 
+It manages the acknowledgement request to the driver for the level transition. 
 It manages the mode change due to the level transition if required.
 
 \subsection{Manage reversing area}
@@ -2054,11 +2054,11 @@ The following data are received from the TIU:
 						\end{itemize}
 					\end{minipage} \\
 				\hline
-				\begin{minipage}[t]{0.5\linewidth} Regenartive brake status	\end{minipage} 
+				\begin{minipage}[t]{0.5\linewidth} Regenerative brake status	\end{minipage} 
 				&	\begin{minipage}[t]{0.5\linewidth}
 						\begin{itemize}
 							\item 0: regenerative brakes are not applied
-							\item 1: regenartive brakes are applied
+							\item 1: regenerative brakes are applied
 						\end{itemize}
 					\end{minipage} \\
 				\hline
@@ -2078,7 +2078,7 @@ The following data are received from the TIU:
 						\end{itemize}
 					\end{minipage} \\
 				\hline
-				\begin{minipage}[t]{0.5\linewidth} Regenartive brake status	\end{minipage} 
+				\begin{minipage}[t]{0.5\linewidth} Regenerative brake status	\end{minipage} 
 				&	\begin{minipage}[t]{0.5\linewidth}
 						\begin{itemize}
 							\item 0: electro pneumatic brakes are not applied
@@ -2430,7 +2430,7 @@ This primitive is used to request a connection (EVC $\rightarrow$ EuroRadio).
 				
 				\hline
 					\begin{minipage}[t]{0.1\linewidth}3 bytes \end{minipage}
-					&\begin{minipage}[t]{0.6\linewidth} Called ETCS Id ( NID\_ENGINE or NID\_RBC )	\end{minipage}
+					&\begin{minipage}[t]{0.6\linewidth} Called ETCS Id (NID\_ENGINE or NID\_RBC)	\end{minipage}
 					&\begin{minipage}[t]{0.3\linewidth} \end{minipage} \\
 				
 				\hline
@@ -2460,7 +2460,7 @@ This primitive is used to request a connection (EVC $\rightarrow$ EuroRadio).
 				
 				\hline
 			\end{longtable}
-			Length : 31 bytes
+			Length: 31 bytes
 \subsection{Connection indication}
 This primitive is used to indicate that a safe connection is established (EuroRadio $\rightarrow$ EVC).
 			\begin{longtable}{|l|l|l|}
@@ -2478,7 +2478,7 @@ This primitive is used to indicate that a safe connection is established (EuroRa
 					
 				\hline
 					 \begin{minipage}[t]{0.1\linewidth}4 bytes \end{minipage}
-					&\begin{minipage}[t]{0.6\linewidth}Connection identifier ( SaCEPID )	\end{minipage}
+					&\begin{minipage}[t]{0.6\linewidth}Connection identifier (SaCEPID)	\end{minipage}
 					&\begin{minipage}[t]{0.3\linewidth}\end{minipage} \\
 					
 				\hline
@@ -2523,7 +2523,7 @@ This primitive is used to indicate that a safe connection is established (EuroRa
 				
 				\hline
 			\end{longtable}
-			Length : 16 bytes
+			Length: 16 bytes
 \subsection{Connection response}
 This primitive is used to respond on reception of "`connection indication"' (EVC $\rightarrow$ EuroRadio).
 			\begin{longtable}{|l|l|l|}
@@ -2541,7 +2541,7 @@ This primitive is used to respond on reception of "`connection indication"' (EVC
 					
 				\hline
 					 \begin{minipage}[t]{0.1\linewidth}4 bytes \end{minipage}
-					&\begin{minipage}[t]{0.6\linewidth}Connection identifier ( SaCEPID )	\end{minipage}
+					&\begin{minipage}[t]{0.6\linewidth}Connection identifier (SaCEPID)	\end{minipage}
 					&\begin{minipage}[t]{0.3\linewidth} \end{minipage} \\
 					
 				\hline
@@ -2560,7 +2560,7 @@ This primitive is used to respond on reception of "`connection indication"' (EVC
 					&\begin{minipage}[t]{0.3\linewidth}\end{minipage} \\
 				\hline
 			\end{longtable}
-			Length : 9 bytes
+			Length: 9 bytes
 \subsection{Connection confirmation}
 This primitive is used to confirm the establishment of a connection on reception of "`connection request"' (EuroRadio $\rightarrow$ EVC).
  			\begin{longtable}{|l|l|l|}
@@ -2578,7 +2578,7 @@ This primitive is used to confirm the establishment of a connection on reception
 					
 				\hline
 					 \begin{minipage}[t]{0.1\linewidth}4 bytes \end{minipage}
-					&\begin{minipage}[t]{0.6\linewidth}Connection identifier ( SaCEPID )	\end{minipage}
+					&\begin{minipage}[t]{0.6\linewidth}Connection identifier (SaCEPID)	\end{minipage}
 					&\begin{minipage}[t]{0.3\linewidth} \end{minipage} \\
 					
 				\hline
@@ -2597,7 +2597,7 @@ This primitive is used to confirm the establishment of a connection on reception
 					&\begin{minipage}[t]{0.3\linewidth}\end{minipage} \\
 				\hline
 			\end{longtable}
-			Length : 9 bytes
+			Length: 9 bytes
 \subsection{Data request}
 This primitive is used to request the transmission of a radio message (EVC $\rightarrow$ EuroRadio).
  			\begin{longtable}{|l|l|l|}
@@ -2615,7 +2615,7 @@ This primitive is used to request the transmission of a radio message (EVC $\rig
 					
 				\hline
 					 \begin{minipage}[t]{0.1\linewidth}4 bytes \end{minipage}
-					&\begin{minipage}[t]{0.6\linewidth}Connection identifier ( SaCEPID )	\end{minipage}
+					&\begin{minipage}[t]{0.6\linewidth}Connection identifier (SaCEPID)	\end{minipage}
 					&\begin{minipage}[t]{0.3\linewidth} \end{minipage} \\
 					
 				\hline
@@ -2630,7 +2630,7 @@ This primitive is used to request the transmission of a radio message (EVC $\rig
 					
 				\hline	
 			\end{longtable}
-			Length : up to 262 bytes	
+			Length: up to 262 bytes	
 \subsection{Data indication}
 This primitive is used to indicate the reception of a radio message (EuroRadio $\rightarrow$ EVC).
  			\begin{longtable}{|l|l|l|}
@@ -2648,7 +2648,7 @@ This primitive is used to indicate the reception of a radio message (EuroRadio $
 					
 				\hline
 					 \begin{minipage}[t]{0.1\linewidth}4 bytes \end{minipage}
-					&\begin{minipage}[t]{0.6\linewidth}Connection identifier ( SaCEPID )	\end{minipage}
+					&\begin{minipage}[t]{0.6\linewidth}Connection identifier (SaCEPID)	\end{minipage}
 					&\begin{minipage}[t]{0.3\linewidth} \end{minipage} \\
 					
 				\hline
@@ -2663,7 +2663,7 @@ This primitive is used to indicate the reception of a radio message (EuroRadio $
 					
 				\hline	
 			\end{longtable}
-			Length : up to 262 bytes
+			Length: up to 262 bytes
 \subsection{Hight priority data request}
 This primitive is used to request the transmission of an emergency radio message (EVC $\rightarrow$ EuroRadio).
  			\begin{longtable}{|l|l|l|}
@@ -2681,7 +2681,7 @@ This primitive is used to request the transmission of an emergency radio message
 					
 				\hline
 					 \begin{minipage}[t]{0.1\linewidth}4 bytes \end{minipage}
-					&\begin{minipage}[t]{0.6\linewidth}Connection identifier ( SaCEPID )	\end{minipage}
+					&\begin{minipage}[t]{0.6\linewidth}Connection identifier (SaCEPID)	\end{minipage}
 					&\begin{minipage}[t]{0.3\linewidth} \end{minipage} \\
 					
 				\hline
@@ -2696,7 +2696,7 @@ This primitive is used to request the transmission of an emergency radio message
 					
 				\hline	
 			\end{longtable}
-			Length : up to 262 bytes
+			Length: up to 262 bytes
 \subsection{Hight priority data indication}
 This primitive is used to indicate the reception of an emergency radio message (EuroRadio $\rightarrow$ EVC).
  			\begin{longtable}{|l|l|l|}
@@ -2714,7 +2714,7 @@ This primitive is used to indicate the reception of an emergency radio message (
 					
 				\hline
 					 \begin{minipage}[t]{0.1\linewidth}4 bytes \end{minipage}
-					&\begin{minipage}[t]{0.6\linewidth}Connection identifier ( SaCEPID )	\end{minipage}
+					&\begin{minipage}[t]{0.6\linewidth}Connection identifier (SaCEPID)	\end{minipage}
 					&\begin{minipage}[t]{0.3\linewidth} \end{minipage} \\
 					
 				\hline
@@ -2729,7 +2729,7 @@ This primitive is used to indicate the reception of an emergency radio message (
 					
 				\hline	
 			\end{longtable}
-			Length : up to 262 bytes
+			Length: up to 262 bytes
 \subsection{Disconnection request}
 This primitive is used to request a disconnection (EVC $\rightarrow$ EuroRadio).
  			\begin{longtable}{|l|l|l|}
@@ -2747,12 +2747,12 @@ This primitive is used to request a disconnection (EVC $\rightarrow$ EuroRadio).
 					
 				\hline
 					 \begin{minipage}[t]{0.1\linewidth}4 bytes \end{minipage}
-					&\begin{minipage}[t]{0.6\linewidth}Connection identifier ( SaCEPID )	\end{minipage}
+					&\begin{minipage}[t]{0.6\linewidth}Connection identifier (SaCEPID)	\end{minipage}
 					&\begin{minipage}[t]{0.3\linewidth} \end{minipage} \\
 					
 				\hline
 			\end{longtable}
-			Length : 5 bytes
+			Length: 5 bytes
 \subsection{Disconnection indication}
 This primitive is used to indicate a disconnection (EuroRadio $\rightarrow$ EVC).
  			\begin{longtable}{|l|l|l|}
@@ -2770,7 +2770,7 @@ This primitive is used to indicate a disconnection (EuroRadio $\rightarrow$ EVC)
 					
 				\hline
 					 \begin{minipage}[t]{0.1\linewidth}4 bytes \end{minipage}
-					&\begin{minipage}[t]{0.6\linewidth}Connection identifier ( SaCEPID )	\end{minipage}
+					&\begin{minipage}[t]{0.6\linewidth}Connection identifier (SaCEPID)	\end{minipage}
 					&\begin{minipage}[t]{0.3\linewidth} \end{minipage} \\
 					
 				\hline
@@ -2785,7 +2785,7 @@ This primitive is used to indicate a disconnection (EuroRadio $\rightarrow$ EVC)
 					
 				\hline
 			\end{longtable}
-			Length : 7 bytes
+			Length: 7 bytes
 
 %===================================================
 %Do NOT change anything below this line
