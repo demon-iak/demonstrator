@@ -119,7 +119,7 @@ The purpose of this work package is to perform the project management activities
 The objective of this work package is to define the requirements for the modelling, verification and validation process in order to satisfy the safety properties of the ERTMS system.
 \subsubsection{WP6 - Dissemination, exploitation and standardisation}
 The purpose of this work package is to organize the market, exploitation, dissemination and standardization activities of the project. The respective activities will be based on individual plans and roadmaps which will be developed at the beginning of the project and which will be tracked and monitored by the Project Steering Board thereafter. The work package will follow an open innovation based approach and provide projects results to the public where appropriate.
-\subsubsection{WP7 - OpenETCS-Language, toolschain and Open Source ecosystem}
+\subsubsection{WP7 - OpenETCS-Language, toolchain and Open Source ecosystem}
 This work package will provide the tool chain, based on formal methods, that is necessary to design, develop, verify and validate the ETCS system. This tool chain will encompass all description levels of the system design from holistic viewpoint to code generation. Specific attention shall be paid to the semantics and traceability of each part of the chain. The formal specification will be used further for verification and code generation. Other uses of the formal specification are conceivable. 
 \subsection{Direct interaction with WP5}
 \subsubsection{WP3 - Modelling of (part of) ETCS specification}
@@ -338,7 +338,7 @@ The on line part includes (provider WP5):
 The execution of a scenario consists of the stimulation of the on-board modules through standard interfaces.
 The environment will be installed on a PC.
 \newpage
-\section{Test Environment for the ON-BOARD}
+\section{Test Environment for the on-board}
 \subsection{Off line tools}
 \subsection{Data preparation}
 A template for test scenarios shall be created. This can be based on a combination of experience and the result of other projects.
@@ -423,7 +423,7 @@ This preliminary list shall be refined.
 
 \subsection{Odometry interface}
 As the implementation of Odometer functionalities is out of scope of openETCS, only relevant data exchanged with the Odometry functions are described.
-\subsubsection{Inputs :}
+\subsubsection{Inputs:}
 \begin{itemize}
 \item	Time and movement data
 \begin{itemize}
@@ -437,14 +437,14 @@ As the implementation of Odometer functionalities is out of scope of openETCS, o
 \end{itemize}
 \item	Odometer status
 \end{itemize}
-\subsubsection{Outputs :}
+\subsubsection{Outputs:}
 \begin{itemize}
 \item Optionally, recalibration data.
 \end{itemize}
 This data shall be confirmed.
 \subsection{Brake/Train interface}
 The inputs and outputs with the train are described in the subset-034 (see /4/).
-\subsubsection{Inputs :}
+\subsubsection{Inputs:}
 \begin{itemize}
 \item	ETCS Main Switch status
 \item	Cab status
@@ -464,7 +464,7 @@ The inputs and outputs with the train are described in the subset-034 (see /4/).
 \item	National System Isolation status
 \item	Brake pressure
 \end{itemize}
-\subsubsection{Outputs :}
+\subsubsection{Outputs:}
 \begin{itemize}
 \item	Service Brake command
 \item	Emergency Brake command
@@ -483,7 +483,7 @@ The inputs and outputs with the train are described in the subset-034 (see /4/).
 \end{itemize}
 \subsection{Balise interface}
 As the implementation of BTM functionalities is out of scope of openETCS, only relevant data exchanged with the BTM are described.
-\subsubsection{Inputs :}
+\subsubsection{Inputs:}
 \begin{itemize}
 \item	Reception of balise message:
 \begin{itemize}
@@ -496,11 +496,11 @@ As the implementation of BTM functionalities is out of scope of openETCS, only r
 \item	Failure, alarm
 \end{itemize}
 \end{itemize}
-\subsubsection{Outputs :}
+\subsubsection{Outputs:}
 None
 \subsection{Loop interface (OPTION)}
 As the implementation of LTM functionalities is out of scope of openETCS, only relevant data exchanged with the LTM are described.
-\subsubsection{Inputs :}
+\subsubsection{Inputs:}
 \begin{itemize}
 \item	Reception of loop message
 \begin{itemize}
@@ -512,7 +512,7 @@ As the implementation of LTM functionalities is out of scope of openETCS, only r
 \item	Failure, alarm
 \end{itemize}
 \end{itemize}
-\subsubsection{Outputs :}
+\subsubsection{Outputs:}
 \begin{itemize}
 \item	Configuration of loop antenna (spread spectrum code)
 \end{itemize}
@@ -564,9 +564,9 @@ The management of radio network / safe connection and exchange of radio messages
 The data (STM messages) exchanged with the National Systems are described in subset-035 (see /5/) and subset-058 (see /9/).
 \subsection{JRU interface}
 The recording of juridical data is deeply linked to the ETCS core functionalities and should be part of the openETCS application
-\subsubsection{Inputs :}
+\subsubsection{Inputs:}
 None
-\subsubsection{Outputs :}
+\subsubsection{Outputs:}
 All juridical information described in subset-027 (see /3/) should be transmitted to the Recording Unit:
 \begin{itemize}
 \item	General message
@@ -617,7 +617,7 @@ All juridical information described in subset-027 (see /3/) should be transmitte
 \subsection{Driver interface}
 As the implementation of DMI functionalities is out of scope of openETCS, only relevant data exchanged with the DMI will be described.
 The description of the data flow should cover the functionalities related to the data displayed and driver actions on DMI as described in ERA\_ERTMS\_015560 (see /2/).
-\subsubsection{Inputs :}
+\subsubsection{Inputs:}
 \begin{itemize}
 \item Activity status of the DMI
 \item	Driver Request or Acknowledgement (other than text)
@@ -633,7 +633,7 @@ The description of the data flow should cover the functionalities related to the
 \item	VBC data (remove) validation
 \item	Output information related to NTC
 \end{itemize}
-\subsubsection{Outputs :}
+\subsubsection{Outputs:}
 \begin{itemize}
 \item	Dynamic Data, like current train speed, target data…
 \item	Request to enable/disable driver menus and buttons
@@ -677,7 +677,7 @@ Test scenarios shall be imported in the test execution environment.
 Test scenarios shall be executed, and the results shall be stored. Stored information will include data provided by the EVC kernel (JRU files) and data provided by the test tools.
 \subsection{Test results exportation (Work package 5)}
 The results of the executed tests shall be exported to templates to be defined in the project.
-\subsection{Test results ecploitation (Work package 4)}
+\subsection{Test results exploitation (Work package 4)}
 The results shall be analysed and a report shall be generated. A template for the reports has to be defined in the project.
 \newpage
 \section{Creation of non vital platform}
