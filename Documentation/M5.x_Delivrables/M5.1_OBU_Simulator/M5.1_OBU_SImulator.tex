@@ -245,7 +245,6 @@ There is one additional module: the EVC simulator controller. It performs the fo
 \item It gets the configuration data to initialise the shared memories and to configure the EVC simulation.
 \item It creates the internal mailbox of the EVC simulator.
 \item It manages the start and stop of the other modules.
-\item It manages the GUI.
 \end{itemize}
 \chapter{Train interface manager}
 \section{Overview}
@@ -277,7 +276,6 @@ This part provides a list of the main exchanged data.
 							\item Estimated acceleration
 							\item Reference time
 							\item Train movement direction
-							\item 
 						\end{itemize}
 					\end{minipage} \\
 				
@@ -1098,6 +1096,7 @@ The Data manager performs the following tasks:
 \item	It manages the national data.
 \item	It manages the route suitability data.
 \item	It manages the emergency stop.
+\item	It manages the user interface and the information to display.
 \end{itemize}
 
 \section{Exchanged data}
@@ -1189,7 +1188,7 @@ The Data manager performs the following tasks:
 							\item Route unsuitability data
 							\item Indication of new national data
 							\item Repositioning information
-							\item Track description (gradient, speed profile, …)
+							\item Track description (gradient, speed profile, ...)
 							\item Mode profile
 							\item Reversing supervision data
 							\item Temporary speed restriction
@@ -1878,7 +1877,7 @@ It manages the override EOA request from the driver, the inhibition of the trans
 It manages the end of the override EOA according to the National values, train trip request or former EOA.
 
 \subsection{Manage end of mission}
-It manages the end of mission procedure according to the mode change. In level 2/3, it requests the sending of “end of mission” radio message. 
+It manages the end of mission procedure according to the mode change. In level 2/3, it requests the sending of end of mission radio message. 
 It manages the repetition of the sending of the radio message if required. 
 It requests the disconnection if no disconnection order has been received from the RBC.
 
