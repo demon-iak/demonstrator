@@ -83,6 +83,7 @@ Version & Section & Modification / Description & Author \\\hline}
  1.0&All parts &Official version &Eric Schellenberg \\\hline
  1.1&All parts &Update &Eric Schellenberg \\\hline
  2.0&All parts &Update for OpenETCS review &Alexis Julin \\\hline
+ 2.1&All parts &Update with SQS review comments &Nicolas Van Landeghem \\\hline
 \end{supertabular}
 
 \tableofcontents
@@ -1096,7 +1097,7 @@ The Data manager performs the following tasks:
 \item	It manages the national data.
 \item	It manages the route suitability data.
 \item	It manages the emergency stop.
-\item	It manages the user interface and the information to display.
+\item	It manages the graphical user interface (GUI) and the information to display.
 \end{itemize}
 
 \section{Exchanged data}
@@ -1169,7 +1170,14 @@ The Data manager performs the following tasks:
 							\item RBC data
 						\end{itemize}				
 					\end{minipage} \\
-				
+				\hline													
+					\begin{minipage}[t]{0.35\linewidth} Graphical User Interface	\end{minipage} 
+				&	\begin{minipage}[t]{0.65\linewidth}
+						\begin{itemize}
+							\item Simulation configuration data
+							\item Simulation controls (stop function)
+						\end{itemize}				
+					\end{minipage} \\				
 				\hline	
 			\end{longtable}	
 \subsection{Output data}
