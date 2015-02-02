@@ -1,9 +1,30 @@
+/*****************************************************************
+Copyright © 2014 - European Rail Software Applications (ERSA)
+                   5 rue Maurice Blin
+                   67500 HAGUENAU
+                   FRANCE
+                   http://www.ersa-france.com
+
+Author(s): Alexis JULIN (ERSA), Didier WECKMANN (ERSA)
+
+Licensed under the EUPL Version 1.1.
+
+You may not use this work except in compliance with the License.
+You may obtain a copy of the License at:
+http://ec.europa.eu/idabc/eupl.html
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" basis, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+either express or implied. See the License for the specific
+language governing permissions and limitations under the License.
+*****************************************************************/
+
 //*************************************************************************************************
 /// @file   EVC_sim.h
 /// @brief  Declaration of functions for interface with eurocab simulator.
 /// Project     : EVC Simulator -
 /// Module      : EVC -
-/// Copyright   : European Rail Software Applications (c) 2014
 //*************************************************************************************************
 
 #ifndef _EVC_SIM_H
