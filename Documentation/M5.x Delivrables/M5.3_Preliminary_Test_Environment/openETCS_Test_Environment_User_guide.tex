@@ -1,0 +1,123 @@
+\documentclass{openETCS/openetcs}
+% Use the option "nocc" if the document is not licensed under Creative Commons
+%\documentclass[nocc]{template/openetcs}
+\usepackage{lipsum,url}
+\usepackage{supertabular}
+\usepackage{multirow}
+\usepackage{color, colortbl}
+\usepackage{listings}
+\definecolor{gray}{rgb}{0.8,0.8,0.8}
+\usepackage[modulo]{lineno}
+\graphicspath{{./openETCS/}{.}{./image/}}
+\begin{document}
+\frontmatter
+\project{openETCS}
+
+%Please do not change anything above this line
+%============================
+
+% The document metadata is defined below
+
+%assign a report number here
+\reportnum{OETCS/WP5/M5.3}
+
+%define your workpackage here
+\wp{Work-Package 5: ``Demonstrator''}
+
+%set a title here
+\title{Automatic Test Runner User manual}
+
+%set a subtitle here
+\subtitle{A comprehensive guide for writing and running SRS 330 scenarios.}
+
+%set the date of the report here
+\date{February 2015}
+
+
+%document approval
+%define the name and affiliation of the people involved in the documents approbation here
+\creatorname{Didier Weckmann}
+\creatoraffil{ERSA}
+
+\techassessorname{Didier Weckmann}
+\techassessoraffil{ERSA}
+
+\qualityassessorname{Ainhoa Gracia}
+\qualityassessoraffil{SQS}
+
+\approvalname{Klaus-R\"udiger Hase}
+\approvalaffil{DB Netz}
+
+
+%define a list of authors and their affiliation here
+
+\author{Alexis Julin, Didier Weckmann, Nicolas Van Landeghem}
+
+\affiliation{ERSA\\
+  5 Rue Maurice Blin \\
+  67500 Haguenau, France}
+
+% define the coverart
+\coverart[width=350pt]{openETCS_EUPL}
+
+%define the type of report
+\reporttype{Description of work}
+
+\begin{abstract}
+	%define an abstract here
+	This document present how the Automatic Test Runner can be used to execute Baseline 3 scenarios. This document also describe the scenario file format and its syntax.
+\end{abstract}
+
+%=============================
+\maketitle
+
+%Modification history
+%if you do not need a modification history table for your document simply comment out the eight lines below
+%=============================
+
+
+\section*{Modification History}
+\tablefirsthead{
+	\hline 
+	\rowcolor{gray} 
+	Version & Section & Modification / Description & Author \\\hline}
+\begin{supertabular}{| m{1.2cm} | m{1.2cm} | m{6.6cm} | m{4cm} |}
+	0.1 &All parts&Creation &Christophe Menager \\\hline
+	1.0 &All parts&Official version &Christophe Menager \\\hline
+	1.1 &All parts&Add option to set SRS language for message &Eric Schellenberg \\\hline
+	2.0 &All parts&Update for new version with integrated DMI &Christophe Menager \\\hline
+	2.1 &All parts&Correction of driver action &Eric Schellenberg \\\hline
+	2.2 &All parts&Added new WAIT\_ICON and BUTTON commands &Flavien Bridault \\\hline
+	2.3 &All parts&REGENBRK\_ON/OFF,  EDDYCURRBRK\_ON/OFF, MAGNSHOEBRK\_ON/OFF descriptions were erroneous and didn’t reflect reality in code &Didier Weckmann \\\hline
+	2.4 &All parts&NTC\_MODULE in Config\_EVCInit &Flavien Bridault \\\hline
+	2.5 &All parts&Config\_Scenario section &Flavien Bridault \\\hline
+	2.6 &All parts&Add tests for speed monitoring status &Stéphane Chenevoy \\\hline
+	2.7 &All parts&Add WAIT\_DYNAMIC commands &Didier Weckmann \\\hline
+	2.8 &All parts&Add EXPECTED\_TO\_FAIL command &Didier Weckmann \\\hline
+	2.9 &All parts&Add WAIT\_BUTTON ACK\_XXX &Didier Weckmann \\\hline
+	2.10 &All parts&Add EVC\_CONFIG, NV\_FROM\_HEX\_BUFFER and COUNTRIES\_ID &Alexis Julin \\\hline
+	2.11 &All parts&Reply to GE comments &Didier Weckmann \\\hline
+	2.12 &All parts&Add WAIT\_TEXT description&Alexis Julin \\\hline
+	2.13 &All parts& Add CHECK\_TRACKCONDITION description&Alexis Julin \\\hline
+\end{supertabular}
+
+
+\tableofcontents
+\listoffiguresandtables
+\newpage
+%=============================
+
+%Uncomment the next line if you need line numbers for tracebility when the document is in review
+%\linenumbers
+%=============================
+
+
+% The actual document starts below this line
+%=============================
+
+%Start here
+
+%document content
+\input{M5.3_Test_Environment_User_guide.tex}
+
+\end{document}
