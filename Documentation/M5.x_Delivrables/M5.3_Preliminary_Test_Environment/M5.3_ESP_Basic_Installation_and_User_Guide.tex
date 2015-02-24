@@ -1,0 +1,586 @@
+\chapter{Abstract}
+This document explains how to install, configure and use the ESP Basic software package and tools.
+
+The purpose of the ESP\_Basic is to provide a tool that allows to perform automatic tests of the on-board simulator through a set of scenarios. During development and tests phases, it is required to validate the changes and perform non regression tests.
+
+The Test Environment is a graphical application integrating an on-board, as well as a simplified DMI. It can simulate all interfaces to the EVC (e.g. balises, radio, loops, odometer, TIU and driver interfaces). It is possible to test the internal state of on-board in order to check its correct behaviour according to an input scenario.
+
+The EVC is included in an independent application EVC Server which can run on the same computer than the Test Environment or an other computer using TCP/IP connection.
+
+This document only concerns ESP Basic installation, configuration and use. For Test Environment dedicated scenarios, report to Test\_Environment\_User\_guide documentation.
+
+\emph{Warning}: At the moment, this documentation is only valid for CentOS 6.5, CentOS 6.6 (Atom computers or virtual machines), as well as Red Hat 6.4.
+
+\chapter{Installation}
+\section{Prerequisites}
+\subsection{Local configuration}
+In order to install ESP\_Basic in local configuration, the following are required:
+\begin{itemize}
+\item Computer
+\item CentOS 6.5 or 6.6
+\item Internet connection
+\item Root access
+\end{itemize}
+\subsection{Remote configuration}
+In order to install ESP\_Basic in remote configuration, the following are required:
+\begin{itemize}
+\item 2x Computers
+\item 2x CentOS 6.5 or 6.6
+\item Internet connection for each computer
+\item Root access on each computer
+\item \emph{Account name must be the same on both computers.}
+\end{itemize}
+
+\section{Installation}
+\emph{NB: You will have to repeat this operation for each computer in remote configuration.}
+\newline
+\emph{Warning: The installation process requires a computer reboot. Save and close all your open documents before starting this step.}
+\begin{itemize}
+\item Copy ESP\_Basic archive on desktop
+\item Open a terminal on desktop
+\item Unpack ESP\_Basic archive
+	\newline
+	\verb|>tar xvfj openETCS_WP5_X_X_X.tar.bz2 |
+\item Connect as root
+\item Launch installation script
+	\newline
+	\verb|>./Install_Basic_ESP |
+\item Wait the computer to complete its reboot
+\end{itemize}
+
+\section{Getting a license (First installation only)}
+\subsection{Getting computer fingerprint}
+\begin{itemize}
+	\item open a \emph{non-root} terminal
+	\item move to ESP\_Basic folder
+	\newline
+	\verb|>cd /usr/local/ESP_Basic |          
+	\item move to Licensing folder
+	\newline
+	\verb|>cd Licensing |
+	\item launch script for getting fingerprint
+	\newline
+	\verb|> ./echoid >> echoid_output.txt|            
+	\item send an email with file echoid\_output.txt to \emph{licenseactivation@ersa-france.com}
+\end{itemize}
+
+\subsection{Installing license}
+
+You will receive an email with a licensing file
+
+\begin{itemize}
+	\item open licensing file with a text editor
+	\item open a root terminal
+	\item move to ESP\_Basic folder
+	\newline
+	\verb|>cd /usr/local/ESP_Basic |          
+	\item move to Licensing folder
+	\newline	
+	\verb|>cd Licensing |	
+	\item launch license installer script	
+	\newline	
+	\verb|>./licenseinstaller -i -l 'xxxx' /opt/ERSA/license/license.rc |         where xxxx must be replaced by the key in licensing file (you can find it from first character to \# character \emph{include})	
+\end{itemize}
+
+\section{Validation}
+
+Check that the folder \emph{/usr/local/ESP\_Basic/} exists.
+\newline
+Check that the following tree exists in \emph{/usr/local/ESP\_Basic/}:
+\begin{itemize}
+\item folder \emph{evc\_server\_gui}
+\begin{itemize}
+\item executable \emph{evc\_server\_gui}
+\item script \emph{RunESG.py}
+\item optional folder \emph{data}
+\item optional compilation files
+\end{itemize}
+\item folder \emph{lib}
+\begin{itemize}
+\item shared library \emph{libevc.so}
+\item some symbolic links to this library
+\end{itemize}
+\item folder \emph{test\_runner2}
+\begin{itemize}
+\item executable \emph{test\_runner2}
+\item script \emph{RunTestRunner.py}
+\item folder \emph{scenarios} which contains scenarios for Test Environment
+\item optional compilation files
+\end{itemize}
+\end{itemize}
+
+\section{Upgrade ESP\_Basic}
+\begin{itemize}
+\item Uninstall previous ESP\_Basic version
+	\newline
+	\verb|>rpm -e ESP_Basic |
+\item Install new ESP\_Basic version
+	\newline
+	\verb|>yum localinstall ESP_Basic_X_X_X_X.rpm |
+\end{itemize}
+
+\section{Uninstall ESP\_Basic}
+\begin{itemize}
+\item Uninstall ESP\_Basic version
+	\newline
+	\verb|>rpm -e ESP_Basic |
+\end{itemize}
+
+\chapter{Automatic Configuration}
+This chapter describes how to use configuration script in order to automatically configure ESP\_Basic and avoid manual configuration.
+\section{Description}
+This script allows to:
+\begin{itemize}
+\item change host name on local and remote computers if needed
+\item change iptables to allow communication between EVC and test runner
+\item configure ssh communication in order to avoid to enter password for each ssh communication
+\end{itemize}
+
+\section{Launching}
+Script to launch Test runner can detect if a new configuration is needed (i.e local/remote hostname or ip change).
+Use following command to launch configuration script
+\begin{itemize} 
+\item Local configuration
+\newline
+\verb|>python configurationScript.py -l |
+\item Remote configuration
+\newline
+\verb|>python configurationScript.py --remote-ip 192.168.55.234 |
+\end{itemize}
+
+\section{Parameters}
+\begin{itemize}
+\item -h or \verb!--!help: show help message and exit
+\item -d or \verb!--!debug-trace: activate debug trace for script
+\item -s or \verb!--!server-side: Script launch on server (machine where ESG is running)
+\item -l or \verb!--!local: Run local configuration for ESP (no need to specify remote-ip parameter)
+\item \verb!--!local-password: password to connect to local host. Default value = dbm
+\item \verb!--!local-hostname: hostname for local host (only use if current hostname is localhost.localdomain). Default value = ESP\_Basic2
+\item \verb!--!local-root-password: password to connect as a root on local machine. Default value = password
+\item \verb!--!remote-login: login to connect to remote host. Default value = dbm
+\item \verb!--!remote-password: password to connect to remote host. Default value = dbm
+\item \verb!--!remote-hostname: hostname for remote host (only use if current hostname is localhost.localdomain). Default value = ESP\_Basic1
+\item \verb!--!remote-ip: IP address for remote host
+\item \verb!--!remote-root-password: password to connect as a root on remote machine. Default value = password
+\item \verb!--!remote-script-path: configuration script path on remote machine. Default value = /usr/local/ESP\_Basic/test\_runner2
+\end{itemize}
+
+\section{Warnings}
+\subsection{Backup current configuration}
+If user install ESP\_Basic on a non-empty computer (or virtual machine), it is highly recommended to save on a safe place the following files and folders:
+\begin{itemize}
+\item \emph{/etc/hosts} 
+\item \emph{/etc/sysconfig/network}
+\item \emph{/home/\emph{user\_name}/.ssh}
+\end{itemize}
+Use root access to save/restore backup file
+
+\subsection{ESP\_Basic failure configuration}
+If there is a failure during execution of configuration script, try manual configuration describe in next chapter.
+
+\subsection{Operating System}
+This configuration script is only valid for CentOS 6.5, CentOS 6.6. It should work on Red Hat 6.4 too.
+
+\chapter{Manual Configuration}
+\section{Local configuration}
+This step is mandatory to be performed once only, after the installation step.
+To achieve this step you have to retrieve the computer IP address (use command \emph{ifconfig} to get it) and host name (use command \emph{hostname} to get it).
+\newline
+For example we assume:
+\begin{itemize}
+\item ip address = 192.168.55.234
+\item host name = ESP\_Client
+\end{itemize}
+
+\subsection{Optionnal: Change host name}
+If \emph{hostname} return \emph{localhost.localdomain} you have to change host name before next step.
+\begin{itemize}
+\item Open a terminal
+\item Connect as root
+\item Open network file
+	\newline
+	\verb|>gedit /etc/sysconfig/network |
+\item Replace in the file
+	\newline
+	\verb|HOSTNAME=localhost.localdomain |
+	\newline
+	with
+	\newline
+	\verb|HOSTNAME=ESP_Client (for example) |	
+\item Save and close \emph{ /etc/sysconfig/network} file
+\item Exit root access
+	\newline
+	\verb|>exit |
+\item Reboot computer
+\end{itemize}
+
+
+\subsection{Update hosts file}
+\begin{itemize}
+\item Open a terminal
+\item Connect as root
+\item open hosts file
+	\newline
+	\verb|>gedit /etc/hosts |
+\item append at the end of file
+	\newline
+	\verb|192.168.55.234  ESP_Client|
+\item Save and close \emph{hosts} file
+\item Exit root access
+	\newline
+	\verb|>exit |
+\end{itemize}
+
+\section{Remote configuration}
+This step is mandatory each time a simulation has to be started with a new server computer (where EVC server will run) or a new client (where Test Environment will run).
+\newline
+To achieve this step you have to retrieve the server computer IP address (use command \emph{ifconfig} to get it) and host name (use command \emph{hostname} to get it).
+\newline
+To complete this step you have to know client computer IP address (use command \emph{ifconfig} to get it) and host name (use command \emph{hostname} to get it).
+\newline
+For example we assume:
+\begin{itemize}
+\item client ip address = 192.168.55.234
+\item client host name = ESP\_Client
+\item client account name = dbm
+\item server ip address = 192.168.55.236
+\item server host name = ESP\_Server
+\item server account name = dbm
+\end{itemize}
+\subsection{Optional: Change host name}
+\emph{Complete this step both on server computer and client computer}
+If \emph{hostname} return \emph{localhost.localdomain} you have to change host name before next step.
+\begin{itemize}
+\item Open a terminal
+\item Connect as root
+\item Open network file
+	\newline
+	\verb|>gedit /etc/sysconfig/network |
+\item Replace in the file
+	\newline
+	\verb|HOSTNAME=localhost.localdomain |
+	\newline
+	with
+	\newline
+	\verb|HOSTNAME=ESP_Client (or ESP_Server) |	
+\item Save and close \emph{hosts} file
+\item Exit root access
+	\newline
+	\verb|>exit |
+\item Reboot computer
+\end{itemize}
+
+\subsection{Update hosts file}
+\emph{Complete this step on server computer and client computer both}
+\begin{itemize}
+\item Open a terminal
+\item Connect as root
+\item open hosts file
+	\newline
+	\verb|>gedit /etc/hosts |
+\item append (or edit if needed) at the end of file
+	\newline
+	\verb|192.168.55.236  ESP_Server|
+	\newline
+	\verb|192.168.55.234  ESP_Client|
+\item Save and close \emph{hosts} file
+\item Exit root access
+	\newline
+	\verb|>exit |
+\end{itemize}
+
+\label{ssh-key}
+\subsection{Copy ssh key}
+
+\subsubsection{Client side}
+\begin{itemize}
+\item Open a terminal
+\item Generate ssh key
+	\newline
+	\verb|>ssh-keygen |
+	\begin{itemize}
+	\item For the question:
+		\newline
+		\verb|>Enter file in which to save the key (/home/dbm/.ssh/id_rsa):  |
+		\newline
+		press \emph{return}
+	\item If command display the question: 
+		\newline
+		\verb|>: Overwrite (y/n)? |
+		\newline
+		press \emph{y}
+	\item For all other questions press \emph{return}
+	\end{itemize}
+\item Copy ssh key on server
+	\newline
+	\verb|>ssh-copy-id dbm@192.168.55.236|		
+	\begin{itemize}
+	\item For the question:
+		\newline
+		\verb|>Are you sure you want to continue connecting (yes/no)?   |
+		\newline
+		enter \emph{yes}	
+	\item enter password for server computer account to complete copy
+	\end{itemize}
+\item reboot computer
+\end{itemize}
+
+\subsubsection{Server side}
+\begin{itemize}
+\item Open a terminal
+\item Generate ssh key
+	\newline
+	\verb|>ssh-keygen |
+	\begin{itemize}
+	\item For the question:
+		\newline
+		\verb|>Enter file in which to save the key (/home/dbm/.ssh/id_rsa):  |
+		\newline
+		press \emph{return}
+	\item If command display the question : 
+		\newline
+		\verb|>: Overwrite (y/n)? |
+		\newline
+		press \emph{y}
+	\item For all other questions press \emph{return}
+	\end{itemize}
+\item Copy ssh key on client computer
+	\newline
+	\verb|>ssh-copy-id dbm@192.168.55.234|		
+	\begin{itemize}
+	\item For the question:
+		\newline
+		\verb|>Are you sure you want to continue connecting (yes/no)?   |
+		\newline
+		enter \emph{yes}	
+	\item enter password for client computer account to complete copy
+	\end{itemize}
+\item reboot computer
+\end{itemize}
+
+\subsection{Open communication port}
+\emph{Complete this step on server computer only}
+\label{trusted-network}
+\subsubsection{Trusted network}
+In order to allow communication between server computer and client computer you can disable firewall
+On Centos : 
+\begin{itemize}
+\item Click on \emph{System}
+\item Click on \emph{Administration}
+\item Click on \emph{Firewall}
+\item Enter server computer password (root password)
+\item Click on \emph{Trusted Interfaces} (left panel)
+\item Check \emph{eth0} and \emph{eth1} lines
+\item Click on \emph{Apply} (top panel)
+\item Close window
+\end{itemize}
+
+\label{untrusted-network}
+\subsubsection{Untrusted network}
+In order to allow communication between server computer and client computer (and only this communication) it is necessary to edit iptables.
+For this step, values to change depend on current iptables configuration. In general, you have to use following command
+\begin{itemize}
+\item Open a terminal
+\item Connect as root
+\item Display current iptables configuration:
+\newline
+\verb|>iptables -nvL --line-numbers  |
+\newline
+For test computer we get following answer
+\begin{lstlisting}[frame=single]
+
+Chain INPUT (policy ACCEPT 0 packets, 0 bytes)
+num pkts bytes target prot opt in out  source    destination         
+1   6619 6544K ACCEPT all  --  *    *  0.0.0.0/0 0.0.0.0/0 ...
+2      2   120 ACCEPT icmp --  *    *  0.0.0.0/0 0.0.0.0/0           
+3     10   575 ACCEPT all  --  lo   *  0.0.0.0/0 0.0.0.0/0           
+4     15   900 ACCEPT tcp  --  *    *  0.0.0.0/0 0.0.0.0/0 ...
+5  14809 1514K REJECT all  --  *    *  0.0.0.0/0 0.0.0.0/0 ...
+																														
+
+Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
+num pkts bytes target prot opt in out source    destination         
+1      0     0 REJECT all  --  *    * 0.0.0.0/0 0.0.0.0/0 ...
+
+Chain OUTPUT (policy ACCEPT 3929 packets, 1066K bytes)
+num pkts bytes target prot opt in out source    destination
+\end{lstlisting}
+\item You have to insert authorization for client packets before REJECT all rules (5) in \emph{Chain INPUT} and \emph{Chain OUTPUT} if a rule exist for this section
+\item to allow input from client, you have to insert at position 5 in iptables
+ \newline
+ \verb|>iptables -I INPUT 5 -s 192.168.55.234 -j ACCEPT  | 
+\item to allow output to client, and as there is no rule REJECT all you can just add a rule to allow this communication
+ \newline
+ \verb|>iptables -A OUTPUT -d 192.168.55.234 -j ACCEPT  |  
+\item Display the final iptables
+\newline
+\verb|>iptables -nvL --line-numbers  |
+\newline
+For test computer we get following answer
+\begin{lstlisting}[frame=single]
+Chain INPUT (policy ACCEPT 0 packets, 0 bytes)
+num pkts bytes target prot opt in out source        dest         
+1   6619 6544K ACCEPT  all --  *    * 0.0.0.0/0     0.0.0.0/0 
+2      2   120 ACCEPT icmp --  *    * 0.0.0.0/0     0.0.0.0/0           
+3     10   575 ACCEPT  all --  lo   * 0.0.0.0/0     0.0.0.0/0           
+4     15   900 ACCEPT  tcp --  *    * 0.0.0.0/0     0.0.0.0/0
+5      0     0 ACCEPT  all --  *    * 192.168.99.78 0.0.0.0/0           
+6  15831 1628K REJECT  all --  *    * 0.0.0.0/0     0.0.0.0/0 
+
+Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
+num pkts bytes target prot opt in out source     dest         
+1      0     0 REJECT  all --  *    * 0.0.0.0/0  0.0.0.0/0
+
+Chain OUTPUT (policy ACCEPT 0 packets, 0 bytes)
+num pkts bytes target prot opt in out source    dest        
+1      0     0 ACCEPT  all --  *    * 0.0.0.0/0 192.168.99.78  
+\end{lstlisting}
+\item Save iptables
+\newline
+\verb|>service iptables save  |
+\end{itemize}
+To remove previous configuration, in order to avoid to keep useless open connection, you have to use following commands
+\begin{itemize}
+\item Remove in \emph{Chain INPUT}
+ \newline
+ \verb|>iptables -D INPUT -s 192.168.55.234 -j ACCEPT  | 
+\item Remove in \emph{Chain OUTPUT}
+ \newline
+ \verb|>iptables -D OUTPUT -d 192.168.55.234 -j ACCEPT  | 
+\end{itemize}
+
+\chapter{User guide}
+\section{Launch ESP Basic}
+\subsection{In local configuration}
+In order to launch ESP Basic in local configuration, you have to:
+\begin{itemize}
+\item Open a terminal
+\item Go in installation folder
+ \newline
+ \verb|>cd /usr/local/ESP_Basic/test_runner2  | 
+\item Launch script to run ESP\_Basic
+ \newline
+ \verb|>python RunTestRunner.py scenarios/ScenarioName.sce  | 
+\end{itemize}
+As result you can see a two GUIs displayed : 
+\begin{itemize}
+\item In a first time EVC\_Server
+\item In a second time AutoTestRunner2 (Test Environment)
+\end{itemize}
+
+\subsection{In remote configuration}
+In order to launch ESP Basic in remote configuration, proceed the following:
+\begin{itemize}
+\item Open a terminal on the client computer
+\item Go in installation folder
+ \newline
+ \verb|>cd /usr/local/ESP_Basic/test_runner2  | 
+\item Launch script to run ESP\_Basic
+ \newline
+ \verb|>python RunTestRunner.py -i 192.168.55.236 scenarios/ScenarioName.sce  | 
+ \newline
+	You have to specify in parameter server computer IP address.
+\end{itemize}
+As result you can see a two GUIs displayed: 
+\begin{itemize}
+\item In a first time EVC\_Server on the server computer
+\item In a second time AutoTestRunner2 (Test Environment) on the client computer
+\end{itemize}
+
+\section{Close ESP Basic}
+In order to close properly ESP Basic, you have to:
+\begin{itemize}
+\item Close AutoTestRunner2
+\item Close EVC Server
+\end{itemize}
+
+\section{Available options}
+Some options are available in the script \emph{RunTestRunner.py}
+\begin{itemize}
+\item -i: specify server computer ip address for TCP/IP communication (only in remote configuration). Default value is 127.0.0.1 and corresponds to the localhost. This will use your local IP stack.
+\item -p: specify server computer port for TCP/IP communication (only in remote configuration). Default value is 12456.
+\item -c: activate auto-close option. When scenario ended, Test Environment and EVC Server close automatically.
+\item -d: generate debug files. When this option is not activated, ESP Basic generate debug files only for function which fail.
+\item -s: specify path where is installed EVC Server (if EVC Server installation folder was moved). Default value is \emph{/usr/local/ESP\_Basic/evc\_server\_gui}
+\item -x: activate Server X management. This option allows to run EVC Server on a server X (use in remote configuration only).
+\item -m: disable automatic configuration checking. This allow to run EVC server when configuration has been done manually.
+\end{itemize}
+\section{GUI description}
+\subsection{EVC Server}
+	\begin{figure}[!h]
+		\centering
+		\includegraphics{DBM_03/EVC_Server_GUI.png}
+		\caption{EVC Server}
+		\label{fig:EVC Server}
+	\end{figure}
+	
+\begin{itemize}
+\item 1: Simulation information
+\item 2: EVC TIU
+\item 3: EVC server console
+\item 4: Curves displaying
+\item 5: Exit
+\end{itemize}
+
+\subsection{Test Environment}
+	\begin{figure}[!h]
+		\centering
+		\includegraphics[width=\textwidth]{DBM_03/AutoTestRunner2.png}
+		\caption{Test Environment}
+		\label{fig:Test Environment}
+	\end{figure}
+	
+\begin{itemize}
+\item 1: Simplified DMI
+\item 2: Scenario messages console
+\item 3: Train TIU
+\item 4: EVC TIU
+\item 5: On-board status
+\item 6: Running scenario
+\item 7: Communication with server computer parameters
+\end{itemize}
+
+\section{Output files} 
+\subsection{Server side}
+There are 3 kinds of files generated during simulation:
+\begin{itemize}
+\item EVC log files in \emph{/usr/local/ESP\_Basic/evc\_server\_gui/data/log}
+\item EVC curve images in \emph{/usr/local/ESP\_Basic/evc\_server\_gui/data/curve}
+\item Potential error files (syntax debug\_*.stderr and debug\_*.stdout) in \emph{/usr/local/ESP\_Basic/evc\_server}
+\end{itemize}
+\subsection{Client side}
+There is 1 kind of files generated during simulation
+\begin{itemize}
+\item Potential error files (syntax debug\_*.stderr and debug\_*.stdout) in \emph{/usr/local/ESP\_Basic/test\_runner2}
+\end{itemize}
+\chapter{Common problems and solutions}
+\section{Client side displays : Fail to get x11-display}
+Test Environment fails to get display address. To solve this issue:
+\subsection{Solution 1}
+Retry the previous command. Sometimes it may happen that the first time ESP\_Basic fail to get X11-display.
+\subsection{Solution 2}
+Activate or remove option -x in RunTestRunner command line.
+\subsection{Solution 3}
+On client computer and server computer, enter the command:
+\newline
+\verb|>xhost +  | 
+\newline
+If it helped to work, append this command in file \emph{/home/{username}/.bash\_profile} on client computer and server computer.
+\section{Client side asks password}
+Copy of the ssh key fail or ssh key is incorrect. To solve this issue:
+\subsection{Solution 1}
+Reboot both the client computer and server computer
+\subsection{Solution 2}
+Restart \ref{ssh-key}
+\newline
+\emph{Warning: Answer yes to question overwrite}
+\section{EVC Server is launch but Test Environment not}
+\subsection{File /etc/hosts is not correct}
+Check IP address and hostname are correct in file \emph{etc/hosts}
+\newline
+Check computer host name is not present in line 127.0.0.1 and in line ::1. Remove it if you can find it in these lines.
+\subsection{Iptables are not correct}
+Your IP tables may be incorrect:
+\newline
+Try to disable firewall (3.2.4 A). If it works now your IP tables are wrong, restart 3.2.4 B
+and check the position where you insert your rule (\emph{before rule with REJECT all}). Do not forget to save your iptables configuration.

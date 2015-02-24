@@ -195,7 +195,7 @@ openETCS project ]
 \def\distribution#1{\gdef\@distribution{#1}}
 \distribution{This work is licensed under the "openETCS Open License Terms" (oOLT) dual Licensing:  \includegraphics[width=30pt]{oOLT.png}}
 \def\preparedfor#1{\gdef\@preparedfor{#1}}
-\preparedfor{MRC\_03 Project}
+\preparedfor{OpenETCS Project}
 \def\contractnum#1{\gdef\@contractnum{#1}}
 \contractnum{}
 \def\monitoredby#1{\gdef\@monitoredby{#1}}
